@@ -7,7 +7,7 @@
 ## Install
 
 ```bash
-go get github.com/cedricblondeau/world-cup-2022-cli-dashboard
+go install github.com/cedricblondeau/world-cup-2022-cli-dashboard@latest
 ```
 
 ## How does it work?
