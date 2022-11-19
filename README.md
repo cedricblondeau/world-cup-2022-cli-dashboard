@@ -1,13 +1,13 @@
-![screenshot](demo.png)
+![screenshot](https://raw.githubusercontent.com/cedricblondeau/world-cup-2022-cli-dashboard/main/demo.png)
 
-# World Cup 20022 CLI Dashboard
+# World Cup 2022 CLI Dashboard
 
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/kinda-sfw.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/made-with-go.svg)](https://forthebadge.com)
 
 ## Install
 
 ```bash
-go get https://github.com/cedricblondeau/world-cup-2022-cli-dashboard
+go get github.com/cedricblondeau/world-cup-2022-cli-dashboard
 ```
 
 ## How does it work?
