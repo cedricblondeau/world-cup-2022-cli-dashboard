@@ -4,10 +4,16 @@
 
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/kinda-sfw.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/made-with-go.svg)](https://forthebadge.com)
 
-## Install
+## Get started
 
+Install:
 ```bash
 go install github.com/cedricblondeau/world-cup-2022-cli-dashboard@latest
+```
+
+Run it:
+```bash
+world-cup-2022-cli-dashboard
 ```
 
 ## How does it work?
