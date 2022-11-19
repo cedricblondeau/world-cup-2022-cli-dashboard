@@ -1,7 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/data/worldcupjson"
+)
 
 func main() {
-	fmt.Println("Hello world!")
+	client := worldcupjson.NewClient()
+	fmt.Println(client.Matches())
+	fmt.Println(client.GroupTables())
 }
