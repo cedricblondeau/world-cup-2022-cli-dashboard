@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	p := tea.NewProgram(ui.NewDashboard(worldcupjson.NewMockClient()))
+	p := tea.NewProgram(ui.NewDashboard(worldcupjson.NewClient()))
 	if _, err := p.Run(); err != nil {
 		fmt.Printf("Oh no, there's been an error: %v", err)
 		os.Exit(1)
