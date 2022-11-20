@@ -8,15 +8,8 @@
 
 #### Method 1: Docker
 
-Build the image:
 ```bash
-git clone https://github.com/cedricblondeau/world-cup-2022-cli-dashboard.git
-cd world-cup-2022-cli-dashboard
-docker build . -t world-cup-2022-cli-dashboard
-```
-
-Run a container:
-```
+docker build https://github.com/cedricblondeau/world-cup-2022-cli-dashboard.git#main -t world-cup-2022-cli-dashboard && \
 docker run -ti -e TZ=America/Toronto world-cup-2022-cli-dashboard
 ```
 
