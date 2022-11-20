@@ -21,18 +21,4 @@ func TestNav(t *testing.T) {
 			t.Fatalf("want %s, got %s", want, got)
 		}
 	})
-
-	t.Run("format scheduled match date", func(t *testing.T) {
-		m := data.Match{
-			Status: data.StatusScheduled,
-			Minute: "completed",
-			Date:   time.Unix(1668771420, 0),
-		}
-
-		want := "Nov 18 12:37 PM"
-		got := renderDatetime(m)
-		if want != got {
-			t.Fatalf("want %s, got %s", want, got)
-		}
-	})
 }

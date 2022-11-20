@@ -74,7 +74,7 @@ func (c *Client) Matches() ([]data.Match, error) {
 		matches = append(matches, data.Match{
 			HomeTeamCode:   parsedMatch.HomeTeam.Country,
 			AwayTeamCode:   parsedMatch.AwayTeam.Country,
-			Date:           date,
+			Date:           date.UTC(),
 			Stage:          stage(parsedMatch.StageName),
 			Status:         status(parsedMatch.Status),
 			Venue:          parsedMatch.Venue + " (" + parsedMatch.Location + ")",

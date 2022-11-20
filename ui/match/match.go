@@ -39,7 +39,7 @@ func Match(params MatchParams) string {
 		lipgloss.Top,
 		lipgloss.NewStyle().Width(threeColsWidth).Align(lipgloss.Left).SetString(params.Match.Venue).String(),
 		lipgloss.NewStyle().Width(threeColsWidth).Align(lipgloss.Center).SetString(renderStatus(params.Match)).String(),
-		lipgloss.NewStyle().Width(threeColsWidth).Align(lipgloss.Right).SetString(params.Match.Date.Format("Jan 2 3:04 PM")).String(),
+		lipgloss.NewStyle().Width(threeColsWidth).Align(lipgloss.Right).SetString(params.Match.Date.Local().Format("Jan 2 3:04 PM")).String(),
 	)
 
 	s += "\n\n\n"

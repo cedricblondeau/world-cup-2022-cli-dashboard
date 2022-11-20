@@ -87,12 +87,14 @@ func renderDatetime(m data.Match) string {
 		return fmt.Sprintf("LIVE %s", m.Minute)
 	}
 
-	timeFromNow := m.Date.Sub(time.Now())
+	localMatchDate := m.Date.Local()
+
+	timeFromNow := localMatchDate.Sub(time.Now())
 	if timeFromNow > 0 && timeFromNow < time.Duration(6)*(time.Hour*24) {
-		return m.Date.Format("Monday 3:04 PM")
+		return localMatchDate.Format("Monday 3:04 PM")
 	}
 
-	return m.Date.Format("Jan 2 3:04 PM")
+	return localMatchDate.Format("Jan 2 3:04 PM")
 }
 
 func renderTeams(m data.Match) string {
