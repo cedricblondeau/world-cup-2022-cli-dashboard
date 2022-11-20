@@ -132,6 +132,7 @@ func eventType(eventTypeStr string) string {
 		"goal-penalty":       data.EventTypePenaltyGoal,
 		"goal-own":           data.EventTypeOwnGoal,
 		"booking":            data.EventTypeYellowCard,
+		"substitution":       data.EventTypeSubIn,
 	}
 
 	if eventType, ok := eventTypeMappings[eventTypeStr]; ok {
