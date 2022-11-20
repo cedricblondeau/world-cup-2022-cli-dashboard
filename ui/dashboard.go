@@ -17,7 +17,7 @@ import (
 
 type intervalRefreshMsg time.Time
 
-const refreshInterval = time.Duration(10) * time.Second
+const refreshInterval = time.Duration(1) * time.Minute
 
 type dashboard struct {
 	bigtext *bigtext.BigText
