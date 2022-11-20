@@ -10,7 +10,7 @@
 
 Build the image:
 ```bash
-git clone git@github.com:cedricblondeau/world-cup-2022-cli-dashboard.git
+git clone https://github.com/cedricblondeau/world-cup-2022-cli-dashboard.git
 cd world-cup-2022-cli-dashboard
 docker build . -t world-cup-2022-cli-dashboard
 ```
