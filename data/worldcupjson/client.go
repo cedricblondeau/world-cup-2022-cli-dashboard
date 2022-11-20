@@ -131,6 +131,8 @@ func eventType(eventTypeStr string) string {
 		"penalty-kick":       data.EventTypePenalyKick,
 		"goal-penalty":       data.EventTypePenaltyGoal,
 		"goal-own":           data.EventTypeOwnGoal,
+		"booking":            data.EventTypeYellowCard,
+		"substitution":       data.EventTypeSubIn,
 	}
 
 	if eventType, ok := eventTypeMappings[eventTypeStr]; ok {
@@ -143,6 +145,7 @@ func eventType(eventTypeStr string) string {
 func status(status string) data.Status {
 	statusMappings := map[string]data.Status{
 		"future_scheduled": data.StatusScheduled,
+		"in_progress":      data.StatusLive,
 		"in progress":      data.StatusLive,
 		"completed":        data.StatusFinished,
 	}
