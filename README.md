@@ -8,6 +8,10 @@
 
 ### Method 1: Docker 🐳
 
+Requirements:
+- Docker
+- Git
+
 ```bash
 docker build https://github.com/cedricblondeau/world-cup-2022-cli-dashboard.git#main -t world-cup-2022-cli-dashboard && \
 docker run -ti -e TZ=America/Toronto world-cup-2022-cli-dashboard
@@ -17,13 +21,12 @@ Replace `America/Toronto` with the desired timezone.
 
 ### Method 2: Go package 
 
-Install:
+Requirements:
+- Go 1.19+ (with `$PATH` properly set up)
+- Git
+
 ```bash
 go install github.com/cedricblondeau/world-cup-2022-cli-dashboard@latest
-```
-
-Run (assumes `$PATH` is properly set up):
-```bash
 world-cup-2022-cli-dashboard
 ```
 
