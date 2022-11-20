@@ -1,4 +1,4 @@
-![screenshot](https://raw.githubusercontent.com/cedricblondeau/world-cup-2022-cli-dashboard/main/demo.png)
+![screenshot](https://raw.githubusercontent.com/cedricblondeau/world-cup-2022-cli-dashboard/main/demo2.png)
 
 # World Cup 2022 CLI Dashboard
 
@@ -19,7 +19,7 @@ docker run -ti -e TZ=America/Toronto world-cup-2022-cli-dashboard
 
 Replace `America/Toronto` with the desired timezone.
 
-### Method 2: Go package 
+### Method 2: Go package
 
 Requirements:
 - Go 1.19+ (with `$PATH` properly set up)
