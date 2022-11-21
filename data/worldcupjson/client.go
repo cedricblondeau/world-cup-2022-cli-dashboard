@@ -5,6 +5,7 @@ import (
 	"errors"
 	"io/ioutil"
 	"net/http"
+	"sort"
 	"time"
 
 	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/data"
@@ -112,6 +113,10 @@ func (c *Client) GroupTables() ([]data.GroupTable, error) {
 				Points: team.GroupPoints,
 			}
 		}
+
+		sort.Slice(table, func(i, j int) bool {
+			return table[i].Points > table[j].Points
+		})
 
 		groupTables[i] = data.GroupTable{
 			Letter: group.Letter,
