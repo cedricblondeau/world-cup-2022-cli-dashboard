@@ -2,3 +2,4 @@
 .DS_Store
 .vscode
 world-cup-2022-cli-dashboard
+dist/
