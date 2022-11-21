@@ -1,0 +1,24 @@
+run:
+  tests: false
+
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0
+
+linters:
+  enable:
+    - bodyclose
+    - errcheck
+    - exportloopref
+    - ineffassign
+    - goimports
+    - gosec
+    - gosimple
+    - govet
+    - nilerr
+    - predeclared
+    - staticcheck
+    - typecheck
+    - unconvert
+    - unused
+    - whitespace
