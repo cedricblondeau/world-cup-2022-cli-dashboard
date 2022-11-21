@@ -10,6 +10,8 @@ import (
 	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/ui/match"
 	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/ui/nav"
 	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/ui/statusbar"
+	"github.com/charmbracelet/bubbles/help"
+	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/spinner"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
@@ -27,6 +29,8 @@ type dashboard struct {
 	dataFetchLastUpdate time.Time
 	dataFetchLoading    bool
 	dataFetchSpinner    spinner.Model
+
+	help help.Model
 
 	groupTables []data.GroupTable
 	matches     []data.Match
@@ -47,6 +51,8 @@ func NewDashboard(fetcher dataFetcher) tea.Model {
 		dataFetcher:      fetcher,
 		dataFetchLoading: true,
 		dataFetchSpinner: s,
+
+		help: help.New(),
 	}
 }
 
@@ -105,6 +111,7 @@ func (m *dashboard) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	case tea.WindowSizeMsg:
 		m.width, m.height = msg.Width, msg.Height
+		m.help.Width = msg.Width
 		return m, nil
 	}
 	return m, nil
@@ -120,7 +127,7 @@ func (m *dashboard) View() string {
 	minWidth := 102
 	minHeight := 35
 	if m.width < minWidth || m.height < minHeight {
-		return fullScreenMsgStyle.Render(fmt.Sprintf("❌ Need at least %d columns and %d rows to render.", minWidth, minHeight))
+		return fullScreenMsgStyle.Render(fmt.Sprintf("❌ Need at least %d columns and %d rows to render.\n\nResize terminal or press q to quit.", minWidth, minHeight))
 	}
 
 	if len(m.matches) == 0 {
@@ -129,10 +136,10 @@ func (m *dashboard) View() string {
 		}
 
 		if m.dataFetchErr != nil {
-			return fullScreenMsgStyle.Render(fmt.Sprintf("❌ HTTP request failed with err: %v...", m.dataFetchErr.Error()))
+			return fullScreenMsgStyle.Render(fmt.Sprintf("❌ HTTP request failed with err: %v.\n\nPress q to quit.", m.dataFetchErr.Error()))
 		}
 
-		return fullScreenMsgStyle.Render("❓ HTTP request succeeded but no matches available.")
+		return fullScreenMsgStyle.Render("❓ HTTP request succeeded but no matches available.\n\nPress q to quit.")
 	}
 
 	navContainer := lipgloss.NewStyle().
@@ -140,17 +147,15 @@ func (m *dashboard) View() string {
 		PaddingTop(1).
 		PaddingBottom(1).
 		SetString(nav.Nav(nav.NavParams{
-			Index:    m.matchIndex,
-			Matches:  m.matches,
-			ShowKeys: !m.matchIndexChanged,
-			Width:    m.width,
+			Index:   m.matchIndex,
+			Matches: m.matches,
+			Width:   m.width,
 		})).
 		String()
 
 	groupsContainer := lipgloss.NewStyle().
 		Border(lipgloss.NormalBorder(), true, false, false, false).
 		PaddingTop(1).
-		PaddingBottom(1).
 		Width(m.width).
 		Align(lipgloss.Center).
 		SetString(groups.Groups(m.groupTables)).
@@ -167,7 +172,19 @@ func (m *dashboard) View() string {
 		})).
 		String()
 
-	matchContainerHeight := m.height - lipgloss.Height(navContainer) - lipgloss.Height(groupsContainer) - lipgloss.Height(statusBarContainer)
+	keyMap := keyMap{
+		Left:  key.NewBinding(key.WithKeys("left", "a"), key.WithHelp("◄/a", "prev match")),
+		Right: key.NewBinding(key.WithKeys("right", "d", " "), key.WithHelp("►/d/space", "next match")),
+		Quit:  key.NewBinding(key.WithKeys("q", "ctrl+c"), key.WithHelp("q/ctrl+c", "quit")),
+	}
+	helpContainer := lipgloss.NewStyle().
+		SetString(m.help.View(keyMap)).
+		Width(m.width).
+		Align(lipgloss.Center).
+		PaddingTop(1).
+		String()
+
+	matchContainerHeight := m.height - lipgloss.Height(navContainer) - lipgloss.Height(groupsContainer) - lipgloss.Height(statusBarContainer) - lipgloss.Height(helpContainer)
 	matchContainer := lipgloss.NewStyle().
 		SetString(match.Match(match.MatchParams{
 			BigText: m.bigtext,
@@ -180,7 +197,7 @@ func (m *dashboard) View() string {
 		PaddingRight(1).
 		String()
 
-	return navContainer + "\n" + matchContainer + "\n" + groupsContainer + "\n" + statusBarContainer
+	return navContainer + "\n" + matchContainer + "\n" + helpContainer + "\n" + groupsContainer + "\n" + statusBarContainer
 }
 
 func refreshCmd() tea.Cmd {
