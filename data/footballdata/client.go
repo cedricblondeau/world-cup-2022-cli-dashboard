@@ -22,7 +22,7 @@ type Client struct {
 func NewClient(token string) *Client {
 	return &Client{
 		httpClient: &http.Client{
-			Timeout: time.Second * 5,
+			Timeout: time.Second * 10,
 		},
 		token: token,
 	}
@@ -154,8 +154,8 @@ func httpGetBytes(client mockableHttpClient, url string, token string) ([]byte, 
 	if err != nil {
 		return nil, err
 	}
-
 	defer resp.Body.Close()
+
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
