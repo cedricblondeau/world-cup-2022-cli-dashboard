@@ -59,7 +59,7 @@ func (m *dashboard) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case dataFetchErrMsg:
 		m.dataFetchErr = msg.err
 		m.dataFetchLoading = false
-		return m, nil
+		return m, refreshCmd()
 
 	case dataFetchMsg:
 		m.dataFetchLoading = false
@@ -69,6 +69,7 @@ func (m *dashboard) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		if !m.matchIndexChanged || m.matchIndex > len(msg.matches)-1 {
 			m.matchIndex = pickMatchIndex(msg.matches)
 		}
+		m.dataFetchErr = nil
 		return m, refreshCmd()
 
 	case intervalRefreshMsg:
