@@ -33,10 +33,9 @@ var (
 )
 
 type NavParams struct {
-	Index    int
-	Matches  []data.Match
-	ShowKeys bool
-	Width    int
+	Index   int
+	Matches []data.Match
+	Width   int
 }
 
 func Nav(params NavParams) string {
@@ -69,11 +68,9 @@ func Nav(params NavParams) string {
 	)
 	s += "\n\n"
 
-	paginationOrKeys := renderPagination(totalPages, currentPage)
-	if params.ShowKeys {
-		paginationOrKeys = "💡 Use ◄ and ► keys to navigate between matches."
-	}
-	s += lipgloss.NewStyle().Width(params.Width).SetString(paginationOrKeys).Align(lipgloss.Center).String()
+	s += lipgloss.NewStyle().Width(params.Width).SetString(
+		renderPagination(totalPages, currentPage),
+	).Align(lipgloss.Center).String()
 
 	return s
 }
