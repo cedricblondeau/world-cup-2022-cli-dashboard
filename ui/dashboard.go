@@ -10,6 +10,8 @@ import (
 	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/ui/match"
 	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/ui/nav"
 	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/ui/statusbar"
+	"github.com/charmbracelet/bubbles/help"
+	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/spinner"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
@@ -27,6 +29,8 @@ type dashboard struct {
 	dataFetchLastUpdate time.Time
 	dataFetchLoading    bool
 	dataFetchSpinner    spinner.Model
+
+	help help.Model
 
 	groupTables []data.GroupTable
 	matches     []data.Match
@@ -47,6 +51,8 @@ func NewDashboard(fetcher dataFetcher) tea.Model {
 		dataFetcher:      fetcher,
 		dataFetchLoading: true,
 		dataFetchSpinner: s,
+
+		help: help.New(),
 	}
 }
 
@@ -105,6 +111,7 @@ func (m *dashboard) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	case tea.WindowSizeMsg:
 		m.width, m.height = msg.Width, msg.Height
+		m.help.Width = msg.Width
 		return m, nil
 	}
 	return m, nil
@@ -150,7 +157,6 @@ func (m *dashboard) View() string {
 	groupsContainer := lipgloss.NewStyle().
 		Border(lipgloss.NormalBorder(), true, false, false, false).
 		PaddingTop(1).
-		PaddingBottom(1).
 		Width(m.width).
 		Align(lipgloss.Center).
 		SetString(groups.Groups(m.groupTables)).
@@ -167,7 +173,19 @@ func (m *dashboard) View() string {
 		})).
 		String()
 
-	matchContainerHeight := m.height - lipgloss.Height(navContainer) - lipgloss.Height(groupsContainer) - lipgloss.Height(statusBarContainer)
+	keyMap := keyMap{
+		Left:  key.NewBinding(key.WithKeys("left", "a"), key.WithHelp("◄/a", "prev match")),
+		Right: key.NewBinding(key.WithKeys("right", "d", " "), key.WithHelp("►/d/space", "next match")),
+		Quit:  key.NewBinding(key.WithKeys("q", "ctrl+c"), key.WithHelp("q/ctrl+c", "quit")),
+	}
+	helpContainer := lipgloss.NewStyle().
+		SetString(m.help.View(keyMap)).
+		Width(m.width).
+		Align(lipgloss.Center).
+		PaddingTop(1).
+		String()
+
+	matchContainerHeight := m.height - lipgloss.Height(navContainer) - lipgloss.Height(groupsContainer) - lipgloss.Height(statusBarContainer) - lipgloss.Height(helpContainer)
 	matchContainer := lipgloss.NewStyle().
 		SetString(match.Match(match.MatchParams{
 			BigText: m.bigtext,
@@ -180,7 +198,7 @@ func (m *dashboard) View() string {
 		PaddingRight(1).
 		String()
 
-	return navContainer + "\n" + matchContainer + "\n" + groupsContainer + "\n" + statusBarContainer
+	return navContainer + "\n" + matchContainer + "\n" + helpContainer + "\n" + groupsContainer + "\n" + statusBarContainer
 }
 
 func refreshCmd() tea.Cmd {
