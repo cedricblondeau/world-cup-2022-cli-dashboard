@@ -127,7 +127,7 @@ func (m *dashboard) View() string {
 	minWidth := 102
 	minHeight := 35
 	if m.width < minWidth || m.height < minHeight {
-		return fullScreenMsgStyle.Render(fmt.Sprintf("❌ Need at least %d columns and %d rows to render.", minWidth, minHeight))
+		return fullScreenMsgStyle.Render(fmt.Sprintf("❌ Need at least %d columns and %d rows to render.\n\nResize terminal or press q to quit.", minWidth, minHeight))
 	}
 
 	if len(m.matches) == 0 {
@@ -136,10 +136,10 @@ func (m *dashboard) View() string {
 		}
 
 		if m.dataFetchErr != nil {
-			return fullScreenMsgStyle.Render(fmt.Sprintf("❌ HTTP request failed with err: %v...", m.dataFetchErr.Error()))
+			return fullScreenMsgStyle.Render(fmt.Sprintf("❌ HTTP request failed with err: %v.\n\nPress q to quit.", m.dataFetchErr.Error()))
 		}
 
-		return fullScreenMsgStyle.Render("❓ HTTP request succeeded but no matches available.")
+		return fullScreenMsgStyle.Render("❓ HTTP request succeeded but no matches available.\n\nPress q to quit.")
 	}
 
 	navContainer := lipgloss.NewStyle().
@@ -147,10 +147,9 @@ func (m *dashboard) View() string {
 		PaddingTop(1).
 		PaddingBottom(1).
 		SetString(nav.Nav(nav.NavParams{
-			Index:    m.matchIndex,
-			Matches:  m.matches,
-			ShowKeys: !m.matchIndexChanged,
-			Width:    m.width,
+			Index:   m.matchIndex,
+			Matches: m.matches,
+			Width:   m.width,
 		})).
 		String()
 
