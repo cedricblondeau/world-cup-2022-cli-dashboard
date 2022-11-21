@@ -3,7 +3,7 @@ package footballdata
 import (
 	"bytes"
 	"errors"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"os"
 )
@@ -17,26 +17,26 @@ func (m *mockHttpClient) Do(req *http.Request) (*http.Response, error) {
 	}
 
 	if req.URL.Path == "/matches" {
-		b, err := ioutil.ReadFile(path + "/data/footballdata/mock/matches.json")
+		b, err := os.ReadFile(path + "/data/footballdata/mock/matches.json")
 		if err != nil {
 			return nil, err
 		}
 
 		return &http.Response{
 			StatusCode: 200,
-			Body:       ioutil.NopCloser(bytes.NewReader(b)),
+			Body:       io.NopCloser(bytes.NewReader(b)),
 		}, nil
 	}
 
 	if req.URL.Path == "/teams" {
-		b, err := ioutil.ReadFile(path + "/data/footballdata/mock/standings.json")
+		b, err := os.ReadFile(path + "/data/footballdata/mock/standings.json")
 		if err != nil {
 			return nil, err
 		}
 
 		return &http.Response{
 			StatusCode: 200,
-			Body:       ioutil.NopCloser(bytes.NewReader(b)),
+			Body:       io.NopCloser(bytes.NewReader(b)),
 		}, nil
 	}
 

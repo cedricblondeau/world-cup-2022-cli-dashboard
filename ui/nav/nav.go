@@ -86,7 +86,7 @@ func renderDatetime(m data.Match) string {
 
 	localMatchDate := m.Date.Local()
 
-	timeFromNow := localMatchDate.Sub(time.Now())
+	timeFromNow := time.Until(localMatchDate)
 	if timeFromNow > 0 && timeFromNow < time.Duration(6)*(time.Hour*24) {
 		return localMatchDate.Format("Monday 3:04 PM")
 	}
@@ -111,7 +111,7 @@ func renderStage(stage string, homeTeamCode string) string {
 		}
 	}
 
-	return string(stage)
+	return stage
 }
 
 func renderPagination(totalPages int, currentPage int) string {

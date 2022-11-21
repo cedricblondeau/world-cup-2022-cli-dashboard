@@ -3,7 +3,7 @@ package worldcupjson
 import (
 	"encoding/json"
 	"errors"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"sort"
 	"time"
@@ -211,7 +211,7 @@ func httpGetBytes(client mockableHttpClient, url string) ([]byte, error) {
 		return nil, errors.New("rate limited, wait a minute and try again")
 	}
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
