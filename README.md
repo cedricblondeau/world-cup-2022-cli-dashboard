@@ -1,4 +1,4 @@
-![screenshot](https://raw.githubusercontent.com/cedricblondeau/world-cup-2022-cli-dashboard/main/demo2.png)
+![screenshot](https://raw.githubusercontent.com/cedricblondeau/world-cup-2022-cli-dashboard/main/screenshot.png)
 
 # World Cup 2022 CLI Dashboard
 
