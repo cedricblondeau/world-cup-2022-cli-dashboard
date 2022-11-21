@@ -15,8 +15,8 @@ const (
 
 var (
 	matchItemStyle = lipgloss.NewStyle().
-			Background(lipgloss.AdaptiveColor{Light: "#EEEEEE", Dark: "#333333"}).
-			Foreground(lipgloss.AdaptiveColor{Light: "#000000", Dark: "#FAFAFA"}).
+			Background(lipgloss.Color("#3E6D9C")).
+			Foreground(lipgloss.Color("#FAFAFA")).
 			Align(lipgloss.Center).
 			Width(matchItemWidth).
 			Padding(1, 0)
@@ -24,7 +24,7 @@ var (
 	selectedMatchItemStyle = matchItemStyle.Copy().
 				Bold(true).
 				Foreground(lipgloss.Color("#FAFAFA")).
-				Background(lipgloss.Color("#7F1431"))
+				Background(lipgloss.Color("#282A3A"))
 
 	stageStyle = lipgloss.NewStyle().
 			Bold(true).
