@@ -26,10 +26,11 @@ var (
 	eventTypeStyle = lipgloss.NewStyle().
 			Background(lipgloss.AdaptiveColor{Light: "#000000", Dark: "#FAFAFA"}).
 			Foreground(lipgloss.AdaptiveColor{Light: "#FAFAFA", Dark: "#000000"})
+
+	shirtNumberStyle = lipgloss.NewStyle().Width(2)
 )
 
 func Match(params MatchParams) string {
-	twoColsWidth := int(math.Floor(float64(params.Width) / 2))
 	threeColsWidth := int(math.Floor(float64(params.Width) / 3))
 	fourColsWidth := int(math.Floor(float64(params.Width) / 4))
 
@@ -46,51 +47,68 @@ func Match(params MatchParams) string {
 
 	s += lipgloss.JoinHorizontal(
 		lipgloss.Top,
+
 		lipgloss.NewStyle().Width(fourColsWidth).Align(lipgloss.Center).SetString(
-			renderTeam(params.Match.HomeTeamCode),
+			lipgloss.NewStyle().Width(25).SetString(
+				renderTeamCol(25, params.Match.HomeTeamCode, params.Match.HomeTeamLineup, true)).String(),
 		).String(),
-		lipgloss.NewStyle().Width(fourColsWidth).Align(lipgloss.Center).SetString(
-			lipgloss.JoinHorizontal(
+
+		lipgloss.NewStyle().Width(fourColsWidth*2).SetString(
+			lipgloss.JoinVertical(
 				lipgloss.Top,
-				scoreDigitStyle.Render(params.BigText.Char(strconv.FormatUint(params.Match.HomeTeamScore, 10))),
+				lipgloss.JoinHorizontal(
+					lipgloss.Top,
+					lipgloss.NewStyle().Width(fourColsWidth-10).Align(lipgloss.Right).SetString(
+						scoreDigitStyle.Render(params.BigText.Char(strconv.FormatUint(params.Match.HomeTeamScore, 10))),
+					).String(),
+					lipgloss.NewStyle().Width(10*2).String(),
+					lipgloss.NewStyle().Width(fourColsWidth-10).Align(lipgloss.Left).SetString(
+						scoreDigitStyle.Render(params.BigText.Char(strconv.FormatUint(params.Match.AwayTeamScore, 10))),
+					).String(),
+				),
+				"",
+				lipgloss.JoinHorizontal(
+					lipgloss.Top,
+					lipgloss.NewStyle().Width(fourColsWidth-10).Align(lipgloss.Right).SetString(renderEvents(params.Match.HomeTeamEvents, true)).String(),
+					lipgloss.NewStyle().Width(10*2).String(),
+					lipgloss.NewStyle().Width(fourColsWidth-10).Align(lipgloss.Left).SetString(renderEvents(params.Match.AwayTeamEvents, false)).String(),
+				),
 			),
 		).String(),
-		lipgloss.NewStyle().Width(fourColsWidth).Align(lipgloss.Center).SetString(
-			lipgloss.JoinHorizontal(
-				lipgloss.Top,
-				scoreDigitStyle.Render(params.BigText.Char(strconv.FormatUint(params.Match.AwayTeamScore, 10))),
-			),
-		).String(),
-		lipgloss.NewStyle().Width(fourColsWidth).Align(lipgloss.Center).SetString(
-			renderTeam(params.Match.AwayTeamCode),
-		).String(),
-	)
 
-	s += "\n\n"
-
-	s += lipgloss.JoinHorizontal(
-		lipgloss.Top,
-		lipgloss.NewStyle().Width(twoColsWidth-8).Align(lipgloss.Right).SetString(renderEvents(params.Match.HomeTeamEvents, true)).String(),
-		lipgloss.NewStyle().Width(8*2).String(),
-		lipgloss.NewStyle().Width(twoColsWidth-8).Align(lipgloss.Left).SetString(renderEvents(params.Match.AwayTeamEvents, false)).String(),
+		lipgloss.NewStyle().Width(fourColsWidth).Align(lipgloss.Center).SetString(
+			lipgloss.NewStyle().Width(25).SetString(
+				renderTeamCol(25, params.Match.AwayTeamCode, params.Match.AwayTeamLineup, false)).String(),
+		).String(),
 	)
 
 	return s
 }
 
-func renderTeam(countryCode string) string {
+func renderTeamCol(width int, countryCode string, lineup []data.Player, reverse bool) string {
 	teamInfo, ok := data.TeamInfoByCode[countryCode]
 	teamName := countryCode
 	if ok {
 		teamName = teamInfo.Name
 	}
+	var renderedLineup string
+	for _, player := range lineup {
+		if reverse {
+			renderedLineup += player.Name + " " + shirtNumberStyle.Render(strconv.FormatInt(int64(player.ShirtNumber), 10)) + "\n"
+		} else {
+			renderedLineup += shirtNumberStyle.Render(strconv.FormatInt(int64(player.ShirtNumber), 10)) + " " + player.Name + "\n"
+		}
+	}
 
-	return lipgloss.JoinVertical(
-		lipgloss.Center,
-		lipgloss.NewStyle().SetString(teamName).Bold(true).String(),
-		"\n",
-		flags.Render(countryCode),
-	)
+	var s string
+	s += lipgloss.NewStyle().Bold(true).Width(width).Align(lipgloss.Center).Render(teamName) + "\n\n"
+	s += flags.Render(countryCode) + "\n"
+	if reverse {
+		s += lipgloss.NewStyle().Width(width).Align(lipgloss.Right).SetString(renderedLineup).String() + "\n"
+	} else {
+		s += lipgloss.NewStyle().Width(width).Align(lipgloss.Left).SetString(renderedLineup).String() + "\n"
+	}
+	return s
 }
 
 func renderStatus(match data.Match) string {

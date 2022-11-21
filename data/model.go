@@ -51,6 +51,8 @@ type Match struct {
 	HomeTeamEvents []Event
 	AwayTeamEvents []Event
 	Status         Status
+	HomeTeamLineup []Player
+	AwayTeamLineup []Player
 
 	// Stage is a Stage when the type is known - otherwise a string
 	Stage string
@@ -69,4 +71,9 @@ type TeamInfo struct {
 	Group       string
 	FirstColor  string
 	SecondColor string
+}
+
+type Player struct {
+	Name        string
+	ShirtNumber int
 }

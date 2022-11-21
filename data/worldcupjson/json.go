@@ -32,4 +32,15 @@ type parsedMatch struct {
 	Minute         string          `json:"time"` // Remove and use new field
 	HomeTeamEvents []parsedEvent   `json:"home_team_events"`
 	AwayTeamEvents []parsedEvent   `json:"away_team_events"`
+	HomeTeamLineup parsedLineup    `json:"home_team_lineup"`
+	AwayTeamLineup parsedLineup    `json:"away_team_lineup"`
+}
+
+type parsedLineup struct {
+	StartingEleven []parsedPlayer `json:"starting_eleven"`
+}
+
+type parsedPlayer struct {
+	Name        string `json:"name"`
+	ShirtNumber int    `json:"shirt_number"`
 }
