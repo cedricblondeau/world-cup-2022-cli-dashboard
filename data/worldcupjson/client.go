@@ -84,6 +84,8 @@ func (c *Client) Matches() ([]data.Match, error) {
 			HomeTeamEvents: homeTeamEvents,
 			AwayTeamEvents: awayTeamEvents,
 			Minute:         parsedMatch.Minute,
+			HomeTeamLineup: lineup(parsedMatch.HomeTeamLineup),
+			AwayTeamLineup: lineup(parsedMatch.AwayTeamLineup),
 		})
 	}
 
@@ -174,6 +176,18 @@ func stage(stageStr string) string {
 	}
 
 	return stageStr
+}
+
+func lineup(p parsedLineup) []data.Player {
+	lineup := make([]data.Player, len(p.StartingEleven))
+	for i, parsedPlayer := range p.StartingEleven {
+		lineup[i] = data.Player{
+			Name:        parsedPlayer.Name,
+			ShirtNumber: parsedPlayer.ShirtNumber,
+		}
+	}
+
+	return lineup
 }
 
 func httpGetBytes(client mockableHttpClient, url string) ([]byte, error) {
