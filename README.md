@@ -30,6 +30,10 @@ go install github.com/cedricblondeau/world-cup-2022-cli-dashboard@latest
 world-cup-2022-cli-dashboard
 ```
 
+### Method 3: Pre-compiled binaries
+
+Pre-compiled binaries are available on the [releases page](https://github.com/cedricblondeau/world-cup-2022-cli-dashboard/releases).
+
 ## How does it work?
 
 UI is powered by [bubbletea](https://github.com/charmbracelet/bubbletea) and [lipgloss](https://github.com/charmbracelet/lipgloss).
