@@ -173,8 +173,8 @@ func (m *dashboard) View() string {
 		String()
 
 	keyMap := keyMap{
-		Left:  key.NewBinding(key.WithKeys("left", "a"), key.WithHelp("◄/a", "prev match")),
-		Right: key.NewBinding(key.WithKeys("right", "d", " "), key.WithHelp("►/d/space", "next match")),
+		Left:  key.NewBinding(key.WithKeys("left", "a", "h"), key.WithHelp("◄/a", "prev match")),
+		Right: key.NewBinding(key.WithKeys("right", "d", " ", "l"), key.WithHelp("►/d/space", "next match")),
 		Quit:  key.NewBinding(key.WithKeys("q", "ctrl+c"), key.WithHelp("q/ctrl+c", "quit")),
 	}
 	helpContainer := lipgloss.NewStyle().
