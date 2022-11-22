@@ -86,7 +86,7 @@ func (m *dashboard) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		switch keypress := msg.String(); keypress {
 		case "q", "ctrl+c", "esc":
 			return m, tea.Quit
-		case "right", " ", "d":
+		case "right", " ", "d", "l":
 			if len(m.matches) == 0 {
 				return m, nil
 			}
@@ -94,7 +94,7 @@ func (m *dashboard) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.matchIndexChanged = true
 			m.matchIndex = min(m.matchIndex+1, len(m.matches)-1)
 			return m, nil
-		case "left", "a":
+		case "left", "a", "h":
 			if len(m.matches) == 0 {
 				return m, nil
 			}
@@ -173,8 +173,8 @@ func (m *dashboard) View() string {
 		String()
 
 	keyMap := keyMap{
-		Left:  key.NewBinding(key.WithKeys("left", "a"), key.WithHelp("◄/a", "prev match")),
-		Right: key.NewBinding(key.WithKeys("right", "d", " "), key.WithHelp("►/d/space", "next match")),
+		Left:  key.NewBinding(key.WithKeys("left", "a", "h"), key.WithHelp("◄/a/h", "prev match")),
+		Right: key.NewBinding(key.WithKeys("right", "d", " ", "l"), key.WithHelp("►/d/l/space", "next match")),
 		Quit:  key.NewBinding(key.WithKeys("q", "ctrl+c"), key.WithHelp("q/ctrl+c", "quit")),
 	}
 	helpContainer := lipgloss.NewStyle().
