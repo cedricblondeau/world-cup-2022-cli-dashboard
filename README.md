@@ -12,9 +12,15 @@ Requirements:
 - Docker
 - Git
 
+Build from a tag:
 ```bash
-docker build https://github.com/cedricblondeau/world-cup-2022-cli-dashboard.git#main -t world-cup-2022-cli-dashboard && \
-docker run -ti -e TZ=America/Toronto world-cup-2022-cli-dashboard
+docker build https://github.com/cedricblondeau/world-cup-2022-cli-dashboard.git#v1.0.1 \
+-t world-cup-2022-cli-dashboard:v1.0.1
+```
+
+Run it:
+```bash
+docker run -ti -e TZ=America/Toronto world-cup-2022-cli-dashboard:v1.0.1
 ```
 
 Replace `America/Toronto` with the desired timezone.
@@ -29,6 +35,10 @@ Requirements:
 go install github.com/cedricblondeau/world-cup-2022-cli-dashboard@latest
 world-cup-2022-cli-dashboard
 ```
+
+### Method 3: Pre-compiled binaries
+
+Pre-compiled binaries are available on the [releases page](https://github.com/cedricblondeau/world-cup-2022-cli-dashboard/releases).
 
 ## Data
 
