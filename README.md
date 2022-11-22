@@ -58,7 +58,7 @@ Or with Docker:
 docker run -ti -e TZ=America/Toronto -e FOOTBALLDATA_API_TOKEN=my_fake_token world-cup-2022-cli-dashboard
 ```
 
-Note that the free `football-data.org` plan comes with less features than `worldcupjson.net`.
+Note that the _free_ `football-data.org` plan comes with less features than `worldcupjson.net`.
 
 |              | worldcupjson.net | football-data.org |
 |--------------|:----------------:|:-----------------:|
