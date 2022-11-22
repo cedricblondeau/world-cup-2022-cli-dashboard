@@ -86,7 +86,7 @@ func (m *dashboard) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		switch keypress := msg.String(); keypress {
 		case "q", "ctrl+c", "esc":
 			return m, tea.Quit
-		case "right", " ", "d":
+		case "right", " ", "d", "l":
 			if len(m.matches) == 0 {
 				return m, nil
 			}
@@ -94,7 +94,7 @@ func (m *dashboard) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.matchIndexChanged = true
 			m.matchIndex = min(m.matchIndex+1, len(m.matches)-1)
 			return m, nil
-		case "left", "a":
+		case "left", "a", "h":
 			if len(m.matches) == 0 {
 				return m, nil
 			}
