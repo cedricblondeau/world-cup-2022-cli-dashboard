@@ -1,8 +1,15 @@
 ![screenshot](https://raw.githubusercontent.com/cedricblondeau/world-cup-2022-cli-dashboard/main/screenshot.png)
 
-# World Cup 2022 CLI Dashboard [![lint](https://github.com/cedricblondeau/world-cup-2022-cli-dashboard/workflows/lint/badge.svg)](https://github.com/cedricblondeau/world-cup-2022-cli-dashboard/actions) [![test](https://github.com/cedricblondeau/world-cup-2022-cli-dashboard/workflows/test/badge.svg)](https://github.com/cedricblondeau/world-cup-2022-cli-dashboard/actions)
+# World Cup 2022 CLI Dashboard [![lint](https://github.com/cedricblondeau/world-cup-2022-cli-dashboard/workflows/lint/badge.svg)](https://github.com/cedricblondeau/world-cup-2022-cli-dashboard/actions) [![test](https://github.com/cedricblondeau/world-cup-2022-cli-dashboard/workflows/test/badge.svg)](https://github.com/cedricblondeau/world-cup-2022-cli-dashboard/actions) [![release](https://badgen.net/github/release/cedricblondeau/world-cup-2022-cli-dashboard)](https://github.com/cedricblondeau/world-cup-2022-cli-dashboard/releases)
 
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/kinda-sfw.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/made-with-go.svg)](https://forthebadge.com)
+
+## Features
+
+- ⚽ Live matches (goals, bookings, substitutions)
+- 🗒️ Team lineups
+- 📅 Scheduled and past matches
+- 📊 Standings
 
 ## Install
 
@@ -64,6 +71,7 @@ Note that the _free_ `football-data.org` plan comes with less features than `wor
 |--------------|:----------------:|:-----------------:|
 | Live scores  |         ✅        |         ✅         |
 | Schedule     |         ✅        |         ✅         |
+| Standing     |         ✅        |         ✅         |
 | Lineups      |         ✅        |         ❌         |
 | Goal scorers |         ✅        |         ❌         |
 
@@ -73,6 +81,9 @@ The data source gets polled every minute.
 
 UI is powered by [bubbletea](https://github.com/charmbracelet/bubbletea) and [lipgloss](https://github.com/charmbracelet/lipgloss).
 
+For optimal results, it's recommended to use a terminal with:
+- True Color (24-bit) support;
+- at least 102 columns and 35 rows.
 ## LICENSE
 
 MIT
