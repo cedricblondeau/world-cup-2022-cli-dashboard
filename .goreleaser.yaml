@@ -1,6 +1,7 @@
 before:
   hooks:
     - go mod tidy
+
 builds:
   - env:
       - CGO_ENABLED=0
@@ -8,6 +9,7 @@ builds:
       - linux
       - windows
       - darwin
+
 archives:
   - replacements:
       darwin: Darwin
@@ -15,13 +17,31 @@ archives:
       windows: Windows
       386: i386
       amd64: x86_64
+
 checksum:
   name_template: 'checksums.txt'
+
 snapshot:
   name_template: "{{ incpatch .Version }}-next"
+
 changelog:
   sort: asc
   filters:
     exclude:
       - '^docs:'
       - '^test:'
+
+universal_binaries:
+  - replace: true
+
+brews:
+  - name: world-cup-2022-cli-dashboard
+    homepage: "https://github.com/cedricblondeau/world-cup-2022-cli-dashboard"
+    license: "MIT"
+    tap:
+      owner: cedricblondeau
+      name: homebrew-cedricblondeau
+      branch: main
+    commit_author:
+      name: Cédric Blondeau
+      email: hi@cedricblondeau.com
