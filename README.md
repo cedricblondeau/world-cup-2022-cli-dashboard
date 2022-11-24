@@ -13,26 +13,34 @@
 
 ## Install
 
-### Method 1: Docker 🐳
+### Method 1: Homebrew 🍺
 
-Requirements:
-- Docker
-- Git
-
-Build from a tag:
+Install:
 ```bash
-docker build https://github.com/cedricblondeau/world-cup-2022-cli-dashboard.git#v1.0.1 \
--t world-cup-2022-cli-dashboard:v1.0.1
+brew tap cedricblondeau/cedricblondeau
+brew install world-cup-2022-cli-dashboard
+```
+
+Run:
+```bash
+world-cup-2022-cli-dashboard
+```
+
+### Method 2: Docker 🐳
+
+Build from the `main` branch:
+```bash
+docker build --no-cache https://github.com/cedricblondeau/world-cup-2022-cli-dashboard.git#main -t world-cup-2022-cli-dashboard
 ```
 
 Run it:
 ```bash
-docker run -ti -e TZ=America/Toronto world-cup-2022-cli-dashboard:v1.0.1
+docker run -ti -e TZ=America/Toronto world-cup-2022-cli-dashboard
 ```
 
 Replace `America/Toronto` with the desired timezone.
 
-### Method 2: Go package
+### Method 3: Go package
 
 Requirements:
 - Go 1.19+ (with `$PATH` properly set up)
@@ -43,7 +51,7 @@ go install github.com/cedricblondeau/world-cup-2022-cli-dashboard@latest
 world-cup-2022-cli-dashboard
 ```
 
-### Method 3: Pre-compiled binaries
+### Method 4: Pre-compiled binaries
 
 Pre-compiled binaries are available on the [releases page](https://github.com/cedricblondeau/world-cup-2022-cli-dashboard/releases).
 
