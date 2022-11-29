@@ -14,8 +14,8 @@ type dataFetcher interface {
 }
 
 type dataFetchMsg struct {
-	groupTables []data.GroupTable
-	matches     []data.Match
+	groupTablesByLetter map[string]data.GroupTable
+	matches             []data.Match
 }
 
 type dataFetchErrMsg struct{ err error }
@@ -25,6 +25,10 @@ func dataFetchCmd(fetcher dataFetcher) func() tea.Msg {
 		groupTables, err := fetcher.GroupTables()
 		if err != nil {
 			return dataFetchErrMsg{err: err}
+		}
+		groupTablesByLetter := make(map[string]data.GroupTable, len(groupTables))
+		for _, g := range groupTables {
+			groupTablesByLetter[g.Letter] = g
 		}
 
 		matches, err := fetcher.Matches()
@@ -36,6 +40,6 @@ func dataFetchCmd(fetcher dataFetcher) func() tea.Msg {
 			return matches[i].Date.Before(matches[j].Date)
 		})
 
-		return dataFetchMsg{groupTables, matches}
+		return dataFetchMsg{groupTablesByLetter, matches}
 	}
 }
