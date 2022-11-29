@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"sort"
+	"strings"
 	"time"
 
 	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/data"
@@ -186,8 +187,9 @@ func stage(stageStr string) string {
 func lineup(p parsedLineup) []data.Player {
 	lineup := make([]data.Player, len(p.StartingEleven))
 	for i, parsedPlayer := range p.StartingEleven {
+		playerName := strings.ReplaceAll(parsedPlayer.Name, "\u00a0", " ")
 		lineup[i] = data.Player{
-			Name:        parsedPlayer.Name,
+			Name:        playerName,
 			ShirtNumber: parsedPlayer.ShirtNumber,
 		}
 	}
