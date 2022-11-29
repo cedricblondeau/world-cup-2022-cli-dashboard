@@ -24,7 +24,7 @@ func Bracket(matches []data.Match) string {
 	}
 
 	var s string
-	s = titleStyle.Render("Final bracket") + "\n"
+	s = titleStyle.Render("Bracket") + "\n"
 	s += lipgloss.JoinHorizontal(
 		lipgloss.Top,
 		leftRoundOfSixteen(matches),
