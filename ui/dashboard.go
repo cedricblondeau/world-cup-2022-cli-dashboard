@@ -6,7 +6,7 @@ import (
 
 	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/data"
 	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/ui/bigtext"
-	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/ui/groups"
+	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/ui/group"
 	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/ui/match"
 	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/ui/nav"
 	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/ui/statusbar"
@@ -32,8 +32,8 @@ type dashboard struct {
 
 	help help.Model
 
-	groupTables []data.GroupTable
-	matches     []data.Match
+	groupTablesByLetter map[string]data.GroupTable
+	matches             []data.Match
 
 	matchIndex        int
 	matchIndexChanged bool
@@ -70,7 +70,7 @@ func (m *dashboard) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case dataFetchMsg:
 		m.dataFetchLoading = false
 		m.dataFetchLastUpdate = time.Now()
-		m.groupTables = msg.groupTables
+		m.groupTablesByLetter = msg.groupTablesByLetter
 		m.matches = msg.matches
 		if !m.matchIndexChanged || m.matchIndex > len(msg.matches)-1 {
 			m.matchIndex = pickMatchIndex(msg.matches)
@@ -153,12 +153,12 @@ func (m *dashboard) View() string {
 		})).
 		String()
 
-	groupsContainer := lipgloss.NewStyle().
+	groupOrBracketContainer := lipgloss.NewStyle().
 		Border(lipgloss.NormalBorder(), true, false, false, false).
 		PaddingTop(1).
 		Width(m.width).
 		Align(lipgloss.Center).
-		SetString(groups.Groups(m.groupTables)).
+		SetString(m.groupOrBracket()).
 		String()
 
 	statusBarContainer := lipgloss.NewStyle().
@@ -184,7 +184,7 @@ func (m *dashboard) View() string {
 		PaddingTop(1).
 		String()
 
-	matchContainerHeight := m.height - lipgloss.Height(navContainer) - lipgloss.Height(groupsContainer) - lipgloss.Height(statusBarContainer) - lipgloss.Height(helpContainer)
+	matchContainerHeight := m.height - lipgloss.Height(navContainer) - lipgloss.Height(groupOrBracketContainer) - lipgloss.Height(statusBarContainer) - lipgloss.Height(helpContainer)
 	matchContainer := lipgloss.NewStyle().
 		SetString(match.Match(match.MatchParams{
 			BigText: m.bigtext,
@@ -197,7 +197,26 @@ func (m *dashboard) View() string {
 		PaddingRight(1).
 		String()
 
-	return navContainer + "\n" + matchContainer + "\n" + helpContainer + "\n" + groupsContainer + "\n" + statusBarContainer
+	return navContainer + "\n" + matchContainer + "\n" + helpContainer + "\n" + groupOrBracketContainer + "\n" + statusBarContainer
+}
+
+func (m *dashboard) groupOrBracket() string {
+	currentMatch := m.matches[min(m.matchIndex, len(m.matches)-1)]
+	if currentMatch.Stage == string(data.StageGroup) {
+		homeTeamInfo, ok := data.TeamInfoByCode[currentMatch.HomeTeamCode]
+		if !ok {
+			return "Group table not available.\n"
+		}
+
+		groupTable, ok := m.groupTablesByLetter[homeTeamInfo.Group]
+		if !ok {
+			return "Group table not available.\n"
+		}
+
+		return group.Group(groupTable)
+	}
+
+	return "Bracket not available yet.\n"
 }
 
 func refreshCmd() tea.Cmd {

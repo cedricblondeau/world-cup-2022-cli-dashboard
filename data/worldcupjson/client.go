@@ -110,8 +110,15 @@ func (c *Client) GroupTables() ([]data.GroupTable, error) {
 		table := make([]data.GroupTableTeam, len(group.Teams))
 		for j, team := range group.Teams {
 			table[j] = data.GroupTableTeam{
-				Code:   team.Country,
-				Points: team.GroupPoints,
+				Code:              team.Country,
+				MatchesPlayed:     team.GamesPlayed,
+				Wins:              team.Wins,
+				Draws:             team.Draws,
+				Losses:            team.Losses,
+				GoalsFor:          team.GoalsFor,
+				GoalsAgainst:      team.GoalsAgainst,
+				GoalsDifferential: team.GoalsDifferential,
+				Points:            team.GroupPoints,
 			}
 		}
 

@@ -35,8 +35,15 @@ type GroupTable struct {
 }
 
 type GroupTableTeam struct {
-	Code   string
-	Points int
+	Code              string
+	Points            int
+	Wins              int
+	Draws             int
+	Losses            int
+	MatchesPlayed     int
+	GoalsFor          int
+	GoalsAgainst      int
+	GoalsDifferential int
 }
 
 type Match struct {
