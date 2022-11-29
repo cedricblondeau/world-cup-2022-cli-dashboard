@@ -29,6 +29,7 @@ type parsedEvent struct {
 }
 
 type parsedMatch struct {
+	ID             int             `json:"id"`
 	Venue          string          `json:"venue"`
 	Location       string          `json:"location"`
 	Status         string          `json:"status"`

@@ -79,7 +79,8 @@ Note that the _free_ `football-data.org` plan comes with less features than `wor
 |--------------|:----------------:|:-----------------:|
 | Live scores  |         ✅        |         ✅         |
 | Schedule     |         ✅        |         ✅         |
-| Standing     |         ✅        |         ✅         |
+| Standings    |         ✅        |         ✅         |
+| Bracket      |         ✅        |         ✅         |
 | Lineups      |         ✅        |         ❌         |
 | Goal scorers |         ✅        |         ❌         |
 

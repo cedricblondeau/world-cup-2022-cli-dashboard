@@ -6,6 +6,7 @@ import (
 
 	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/data"
 	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/ui/bigtext"
+	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/ui/bracket"
 	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/ui/group"
 	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/ui/match"
 	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/ui/nav"
@@ -33,7 +34,7 @@ type dashboard struct {
 	help help.Model
 
 	groupTablesByLetter map[string]data.GroupTable
-	matches             []data.Match
+	sortedMatches       []data.Match
 
 	matchIndex        int
 	matchIndexChanged bool
@@ -71,9 +72,9 @@ func (m *dashboard) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.dataFetchLoading = false
 		m.dataFetchLastUpdate = time.Now()
 		m.groupTablesByLetter = msg.groupTablesByLetter
-		m.matches = msg.matches
-		if !m.matchIndexChanged || m.matchIndex > len(msg.matches)-1 {
-			m.matchIndex = pickMatchIndex(msg.matches)
+		m.sortedMatches = msg.sortedMatches
+		if !m.matchIndexChanged || m.matchIndex > len(msg.sortedMatches)-1 {
+			m.matchIndex = pickMatchIndex(msg.sortedMatches)
 		}
 		m.dataFetchErr = nil
 		return m, refreshCmd()
@@ -87,15 +88,15 @@ func (m *dashboard) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "q", "ctrl+c", "esc":
 			return m, tea.Quit
 		case "right", " ", "d", "l":
-			if len(m.matches) == 0 {
+			if len(m.sortedMatches) == 0 {
 				return m, nil
 			}
 
 			m.matchIndexChanged = true
-			m.matchIndex = min(m.matchIndex+1, len(m.matches)-1)
+			m.matchIndex = min(m.matchIndex+1, len(m.sortedMatches)-1)
 			return m, nil
 		case "left", "a", "h":
-			if len(m.matches) == 0 {
+			if len(m.sortedMatches) == 0 {
 				return m, nil
 			}
 
@@ -124,13 +125,13 @@ func (m *dashboard) View() string {
 
 	fullScreenMsgStyle := lipgloss.NewStyle().Width(m.width).Height(m.height).Align(lipgloss.Center, lipgloss.Center)
 
-	minWidth := 102
-	minHeight := 35
+	minWidth := 113
+	minHeight := 38
 	if m.width < minWidth || m.height < minHeight {
 		return fullScreenMsgStyle.Render(fmt.Sprintf("❌ Need at least %d columns and %d rows to render.\n\nResize terminal or press q to quit.", minWidth, minHeight))
 	}
 
-	if len(m.matches) == 0 {
+	if len(m.sortedMatches) == 0 {
 		if m.dataFetchLoading {
 			return fullScreenMsgStyle.Render(m.dataFetchSpinner.View() + " " + fmt.Sprintf("Loading data from %s...", m.dataFetcher.Name()))
 		}
@@ -148,7 +149,7 @@ func (m *dashboard) View() string {
 		PaddingBottom(1).
 		SetString(nav.Nav(nav.NavParams{
 			Index:   m.matchIndex,
-			Matches: m.matches,
+			Matches: m.sortedMatches,
 			Width:   m.width,
 		})).
 		String()
@@ -188,7 +189,7 @@ func (m *dashboard) View() string {
 	matchContainer := lipgloss.NewStyle().
 		SetString(match.Match(match.MatchParams{
 			BigText: m.bigtext,
-			Match:   m.matches[min(m.matchIndex, len(m.matches)-1)],
+			Match:   m.sortedMatches[min(m.matchIndex, len(m.sortedMatches)-1)],
 			Width:   m.width - 1 - 1,
 		})).
 		Height(matchContainerHeight).
@@ -201,7 +202,7 @@ func (m *dashboard) View() string {
 }
 
 func (m *dashboard) groupOrBracket() string {
-	currentMatch := m.matches[min(m.matchIndex, len(m.matches)-1)]
+	currentMatch := m.sortedMatches[min(m.matchIndex, len(m.sortedMatches)-1)]
 	if currentMatch.Stage == string(data.StageGroup) {
 		homeTeamInfo, ok := data.TeamInfoByCode[currentMatch.HomeTeamCode]
 		if !ok {
@@ -216,7 +217,7 @@ func (m *dashboard) groupOrBracket() string {
 		return group.Group(groupTable)
 	}
 
-	return "Bracket not available yet.\n"
+	return bracket.Bracket(m.sortedMatches)
 }
 
 func refreshCmd() tea.Cmd {
