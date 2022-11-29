@@ -49,8 +49,7 @@ func Match(params MatchParams) string {
 		lipgloss.Top,
 
 		lipgloss.NewStyle().Width(fourColsWidth).Align(lipgloss.Center).SetString(
-			lipgloss.NewStyle().Width(25).SetString(
-				renderTeamCol(25, params.Match.HomeTeamCode, params.Match.HomeTeamLineup, true)).String(),
+			renderTeamCol(fourColsWidth, params.Match.HomeTeamCode, params.Match.HomeTeamLineup, true),
 		).String(),
 
 		lipgloss.NewStyle().Width(fourColsWidth*2).SetString(
@@ -77,8 +76,7 @@ func Match(params MatchParams) string {
 		).String(),
 
 		lipgloss.NewStyle().Width(fourColsWidth).Align(lipgloss.Center).SetString(
-			lipgloss.NewStyle().Width(25).SetString(
-				renderTeamCol(25, params.Match.AwayTeamCode, params.Match.AwayTeamLineup, false)).String(),
+			renderTeamCol(fourColsWidth, params.Match.AwayTeamCode, params.Match.AwayTeamLineup, false),
 		).String(),
 	)
 
@@ -100,14 +98,18 @@ func renderTeamCol(width int, countryCode string, lineup []data.Player, reverse 
 		}
 	}
 
-	var s string
-	s += lipgloss.NewStyle().Bold(true).Width(width).Align(lipgloss.Center).Render(teamName) + "\n\n"
-	s += flags.Render(countryCode) + "\n"
 	if reverse {
+		var s string
+		s += lipgloss.NewStyle().Bold(true).Width(width).Align(lipgloss.Right).Render(teamName) + "\n\n"
+		s += lipgloss.NewStyle().Width(width).Align(lipgloss.Right).SetString(flags.Render(countryCode)).String() + "\n"
 		s += lipgloss.NewStyle().Width(width).Align(lipgloss.Right).SetString(renderedLineup).String() + "\n"
-	} else {
-		s += lipgloss.NewStyle().Width(width).Align(lipgloss.Left).SetString(renderedLineup).String() + "\n"
+		return s
 	}
+
+	var s string
+	s += lipgloss.NewStyle().Bold(true).Width(width).Align(lipgloss.Left).Render(teamName) + "\n\n"
+	s += lipgloss.NewStyle().Width(width).Align(lipgloss.Left).SetString(flags.Render(countryCode)).String() + "\n"
+	s += lipgloss.NewStyle().Width(width).Align(lipgloss.Left).SetString(renderedLineup).String() + "\n"
 	return s
 }
 
