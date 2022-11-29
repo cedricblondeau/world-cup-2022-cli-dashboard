@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"sort"
 	"strings"
 	"time"
 
@@ -75,7 +76,7 @@ func (c *Client) GroupTables() ([]data.GroupTable, error) {
 	return groupTables, nil
 }
 
-func (c *Client) Matches() ([]data.Match, error) {
+func (c *Client) SortedMatches() ([]data.Match, error) {
 	b, err := httpGetBytes(c.httpClient, "https://api.football-data.org/v4/competitions/WC/matches", c.token)
 	if err != nil {
 		return nil, err
@@ -94,6 +95,7 @@ func (c *Client) Matches() ([]data.Match, error) {
 		}
 
 		matches = append(matches, data.Match{
+			ID:            parsedMatch.ID,
 			HomeTeamCode:  parsedMatch.HomeTeam.TLA,
 			AwayTeamCode:  parsedMatch.AwayTeam.TLA,
 			Date:          date.UTC(),
@@ -104,6 +106,10 @@ func (c *Client) Matches() ([]data.Match, error) {
 			AwayTeamScore: uint64(parsedMatch.Score.FullTime.Away),
 		})
 	}
+
+	sort.Slice(matches, func(i, j int) bool {
+		return matches[i].ID < matches[j].ID
+	})
 
 	return matches, nil
 }

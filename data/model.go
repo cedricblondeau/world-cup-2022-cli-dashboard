@@ -47,6 +47,7 @@ type GroupTableTeam struct {
 }
 
 type Match struct {
+	ID             int
 	HomeTeamCode   string
 	AwayTeamCode   string
 	Date           time.Time

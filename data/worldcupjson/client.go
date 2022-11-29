@@ -38,7 +38,7 @@ func (c *Client) Name() string {
 	return "worldcupjson.net"
 }
 
-func (c *Client) Matches() ([]data.Match, error) {
+func (c *Client) SortedMatches() ([]data.Match, error) {
 	b, err := httpGetBytes(c.httpClient, "https://worldcupjson.net/matches?details=true")
 	if err != nil {
 		return nil, err
@@ -75,6 +75,7 @@ func (c *Client) Matches() ([]data.Match, error) {
 		}
 
 		matches = append(matches, data.Match{
+			ID:             parsedMatch.ID,
 			HomeTeamCode:   parsedMatch.HomeTeam.Country,
 			AwayTeamCode:   parsedMatch.AwayTeam.Country,
 			Date:           date.UTC(),
@@ -90,6 +91,10 @@ func (c *Client) Matches() ([]data.Match, error) {
 			AwayTeamLineup: lineup(parsedMatch.AwayTeamLineup),
 		})
 	}
+
+	sort.Slice(matches, func(i, j int) bool {
+		return matches[i].ID < matches[j].ID
+	})
 
 	return matches, nil
 }
