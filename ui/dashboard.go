@@ -124,8 +124,8 @@ func (m *dashboard) View() string {
 
 	fullScreenMsgStyle := lipgloss.NewStyle().Width(m.width).Height(m.height).Align(lipgloss.Center, lipgloss.Center)
 
-	minWidth := 102
-	minHeight := 35
+	minWidth := 105
+	minHeight := 38
 	if m.width < minWidth || m.height < minHeight {
 		return fullScreenMsgStyle.Render(fmt.Sprintf("❌ Need at least %d columns and %d rows to render.\n\nResize terminal or press q to quit.", minWidth, minHeight))
 	}
