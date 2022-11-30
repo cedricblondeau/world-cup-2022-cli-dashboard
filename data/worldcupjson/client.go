@@ -138,7 +138,6 @@ func (c *Client) GroupTables() ([]data.GroupTable, error) {
 			default:
 				return table[i].Points > table[j].Points
 			}
-
 		})
 
 		groupTables[i] = data.GroupTable{
