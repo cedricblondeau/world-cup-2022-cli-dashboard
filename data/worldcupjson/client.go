@@ -128,7 +128,16 @@ func (c *Client) GroupTables() ([]data.GroupTable, error) {
 		}
 
 		sort.Slice(table, func(i, j int) bool {
-			return table[i].Points > table[j].Points
+			switch {
+			case table[i].Points != table[j].Points:
+				return table[i].Points > table[j].Points
+			case table[i].GoalsDifferential != table[j].GoalsDifferential:
+				return table[i].GoalsDifferential > table[j].GoalsDifferential
+			case table[i].GoalsFor != table[j].GoalsFor:
+				return table[i].GoalsFor > table[j].GoalsFor
+			default:
+				return table[i].Points > table[j].Points
+			}
 		})
 
 		groupTables[i] = data.GroupTable{
