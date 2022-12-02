@@ -108,7 +108,10 @@ func (c *Client) SortedMatches() ([]data.Match, error) {
 	}
 
 	sort.Slice(matches, func(i, j int) bool {
-		return matches[i].ID < matches[j].ID
+		if matches[i].Date.Equal(matches[j].Date) {
+			return matches[i].ID < matches[j].ID
+		}
+		return matches[i].Date.Before(matches[j].Date)
 	})
 
 	return matches, nil
