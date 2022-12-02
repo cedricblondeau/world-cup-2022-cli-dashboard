@@ -192,7 +192,6 @@ func events(p parsedEvent) []data.Event {
 				Minute: p.Time,
 			},
 		}
-
 	}
 
 	return []data.Event{
