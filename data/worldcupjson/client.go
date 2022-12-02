@@ -84,8 +84,8 @@ func (c *Client) SortedMatches() ([]data.Match, error) {
 			Venue:          parsedMatch.Venue + " (" + parsedMatch.Location + ")",
 			HomeTeamScore:  uint64(parsedMatch.HomeTeam.Goals),
 			AwayTeamScore:  uint64(parsedMatch.AwayTeam.Goals),
-			HomeTeamEvents: homeTeamEvents,
-			AwayTeamEvents: awayTeamEvents,
+			HomeTeamEvents: dedupeEvents(homeTeamEvents),
+			AwayTeamEvents: dedupeEvents(awayTeamEvents),
 			Minute:         parsedMatch.Minute,
 			HomeTeamLineup: lineup(parsedMatch.HomeTeamLineup),
 			AwayTeamLineup: lineup(parsedMatch.AwayTeamLineup),
@@ -97,6 +97,24 @@ func (c *Client) SortedMatches() ([]data.Match, error) {
 	})
 
 	return matches, nil
+}
+
+func dedupeEvents(events []data.Event) []data.Event {
+	dedupedEvents := make([]data.Event, 0, len(events))
+	seenEvents := make(map[string]struct{})
+	seenEventKey := func(event data.Event) string {
+		return event.Minute + "-" + event.Type + "-" + event.Player
+	}
+	for _, event := range events {
+		key := seenEventKey(event)
+		if _, ok := seenEvents[key]; ok {
+			continue
+		}
+
+		seenEvents[key] = struct{}{}
+		dedupedEvents = append(dedupedEvents, event)
+	}
+	return dedupedEvents
 }
 
 func (c *Client) GroupTables() ([]data.GroupTable, error) {
