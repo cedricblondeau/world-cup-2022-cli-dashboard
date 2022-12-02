@@ -57,21 +57,13 @@ func (c *Client) SortedMatches() ([]data.Match, error) {
 		}
 
 		homeTeamEvents := make([]data.Event, len(parsedMatch.HomeTeamEvents))
-		for i, event := range parsedMatch.HomeTeamEvents {
-			homeTeamEvents[i] = data.Event{
-				Type:   eventType(event.TypeOfEvent),
-				Player: event.Player,
-				Minute: event.Time,
-			}
+		for _, event := range parsedMatch.HomeTeamEvents {
+			homeTeamEvents = append(homeTeamEvents, events(event)...)
 		}
 
 		awayTeamEvents := make([]data.Event, len(parsedMatch.AwayTeamEvents))
-		for i, event := range parsedMatch.AwayTeamEvents {
-			awayTeamEvents[i] = data.Event{
-				Type:   eventType(event.TypeOfEvent),
-				Player: event.Player,
-				Minute: event.Time,
-			}
+		for _, event := range parsedMatch.AwayTeamEvents {
+			awayTeamEvents = append(awayTeamEvents, events(event)...)
 		}
 
 		matches = append(matches, data.Match{
@@ -103,6 +95,10 @@ func dedupeEvents(events []data.Event) []data.Event {
 	dedupedEvents := make([]data.Event, 0, len(events))
 	seenEvents := make(map[string]struct{})
 	seenEventKey := func(event data.Event) string {
+		if event.Type == data.EventTypeSubIn || event.Type == data.EventTypeSubOut {
+			// assumes a player should come in and out only once per match
+			return event.Type + "-" + event.Player
+		}
 		return event.Minute + "-" + event.Type + "-" + event.Player
 	}
 	for _, event := range events {
@@ -165,6 +161,47 @@ func (c *Client) GroupTables() ([]data.GroupTable, error) {
 	}
 
 	return groupTables, nil
+}
+
+func events(p parsedEvent) []data.Event {
+	t := eventType(p.TypeOfEvent)
+
+	if t == data.EventTypeSubIn {
+		var parsedInfo parsedSubEventInfo
+		err := json.Unmarshal([]byte(p.ExtraInfo), &parsedInfo)
+
+		if err != nil {
+			return []data.Event{
+				{
+					Type:   t,
+					Player: p.Player,
+					Minute: p.Time,
+				},
+			}
+		}
+
+		return []data.Event{
+			{
+				Type:   data.EventTypeSubOut,
+				Player: parsedInfo.PlayerOff,
+				Minute: p.Time,
+			},
+			{
+				Type:   data.EventTypeSubIn,
+				Player: parsedInfo.PlayerOn,
+				Minute: p.Time,
+			},
+		}
+
+	}
+
+	return []data.Event{
+		{
+			Type:   t,
+			Player: p.Player,
+			Minute: p.Time,
+		},
+	}
 }
 
 func eventType(eventTypeStr string) string {

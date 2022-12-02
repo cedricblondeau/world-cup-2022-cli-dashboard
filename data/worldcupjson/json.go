@@ -26,6 +26,12 @@ type parsedEvent struct {
 	TypeOfEvent string `json:"type_of_event"`
 	Player      string `json:"player"`
 	Time        string `json:"time"`
+	ExtraInfo   string `json:"extra_info"`
+}
+
+type parsedSubEventInfo struct {
+	PlayerOn  string `json:"player_on"`
+	PlayerOff string `json:"player_off"`
 }
 
 type parsedMatch struct {
