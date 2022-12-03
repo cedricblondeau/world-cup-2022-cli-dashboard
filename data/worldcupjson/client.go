@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/data"
+	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/data/local"
 )
 
 type mockableHttpClient interface {
@@ -56,12 +57,12 @@ func (c *Client) SortedMatches() ([]data.Match, error) {
 			return nil, err
 		}
 
-		homeTeamEvents := make([]data.Event, len(parsedMatch.HomeTeamEvents))
+		var homeTeamEvents []data.Event
 		for _, event := range parsedMatch.HomeTeamEvents {
 			homeTeamEvents = append(homeTeamEvents, events(event)...)
 		}
 
-		awayTeamEvents := make([]data.Event, len(parsedMatch.AwayTeamEvents))
+		var awayTeamEvents []data.Event
 		for _, event := range parsedMatch.AwayTeamEvents {
 			awayTeamEvents = append(awayTeamEvents, events(event)...)
 		}
@@ -87,6 +88,12 @@ func (c *Client) SortedMatches() ([]data.Match, error) {
 	sort.Slice(matches, func(i, j int) bool {
 		return matches[i].ID < matches[j].ID
 	})
+
+	localMatches, err := local.SortedMatches()
+	if err != nil {
+		return nil, err
+	}
+	copy(matches, localMatches)
 
 	return matches, nil
 }
@@ -114,53 +121,7 @@ func dedupeEvents(events []data.Event) []data.Event {
 }
 
 func (c *Client) GroupTables() ([]data.GroupTable, error) {
-	b, err := httpGetBytes(c.httpClient, "https://worldcupjson.net/teams")
-	if err != nil {
-		return nil, err
-	}
-
-	var p parsedTeams
-	if err := json.Unmarshal(b, &p); err != nil {
-		return nil, err
-	}
-
-	groupTables := make([]data.GroupTable, len(p.Groups))
-	for i, group := range p.Groups {
-		table := make([]data.GroupTableTeam, len(group.Teams))
-		for j, team := range group.Teams {
-			table[j] = data.GroupTableTeam{
-				Code:              team.Country,
-				MatchesPlayed:     team.GamesPlayed,
-				Wins:              team.Wins,
-				Draws:             team.Draws,
-				Losses:            team.Losses,
-				GoalsFor:          team.GoalsFor,
-				GoalsAgainst:      team.GoalsAgainst,
-				GoalsDifferential: team.GoalsDifferential,
-				Points:            team.GroupPoints,
-			}
-		}
-
-		sort.Slice(table, func(i, j int) bool {
-			switch {
-			case table[i].Points != table[j].Points:
-				return table[i].Points > table[j].Points
-			case table[i].GoalsDifferential != table[j].GoalsDifferential:
-				return table[i].GoalsDifferential > table[j].GoalsDifferential
-			case table[i].GoalsFor != table[j].GoalsFor:
-				return table[i].GoalsFor > table[j].GoalsFor
-			default:
-				return table[i].Points > table[j].Points
-			}
-		})
-
-		groupTables[i] = data.GroupTable{
-			Letter: group.Letter,
-			Table:  table,
-		}
-	}
-
-	return groupTables, nil
+	return local.GroupTables()
 }
 
 func events(p parsedEvent) []data.Event {

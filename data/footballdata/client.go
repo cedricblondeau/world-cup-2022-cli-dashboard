@@ -5,10 +5,10 @@ import (
 	"io"
 	"net/http"
 	"sort"
-	"strings"
 	"time"
 
 	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/data"
+	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/data/local"
 )
 
 type mockableHttpClient interface {
@@ -40,40 +40,7 @@ func (c *Client) Name() string {
 }
 
 func (c *Client) GroupTables() ([]data.GroupTable, error) {
-	b, err := httpGetBytes(c.httpClient, "https://api.football-data.org/v4/competitions/WC/standings", c.token)
-	if err != nil {
-		return nil, err
-	}
-
-	var p parsedStandings
-	if err := json.Unmarshal(b, &p); err != nil {
-		return nil, err
-	}
-
-	groupTables := make([]data.GroupTable, len(p.Groups))
-	for i, parsedGroup := range p.Groups {
-		table := make([]data.GroupTableTeam, len(parsedGroup.Table))
-		for j, team := range parsedGroup.Table {
-			table[j] = data.GroupTableTeam{
-				Code:              team.Team.TLA,
-				Points:            team.Points,
-				MatchesPlayed:     team.PlayedGames,
-				Wins:              team.Won,
-				Draws:             team.Draw,
-				Losses:            team.Lost,
-				GoalsFor:          team.GoalsFor,
-				GoalsAgainst:      team.GoalsAgainst,
-				GoalsDifferential: team.GoalDifference,
-			}
-		}
-
-		groupTables[i] = data.GroupTable{
-			Letter: strings.TrimPrefix(parsedGroup.Group, "GROUP_"),
-			Table:  table,
-		}
-	}
-
-	return groupTables, nil
+	return local.GroupTables()
 }
 
 func (c *Client) SortedMatches() ([]data.Match, error) {
@@ -113,6 +80,12 @@ func (c *Client) SortedMatches() ([]data.Match, error) {
 		}
 		return matches[i].Date.Before(matches[j].Date)
 	})
+
+	localMatches, err := local.SortedMatches()
+	if err != nil {
+		return nil, err
+	}
+	copy(matches, localMatches)
 
 	return matches, nil
 }
