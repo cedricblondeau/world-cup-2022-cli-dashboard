@@ -27,6 +27,8 @@ var (
 			Background(lipgloss.AdaptiveColor{Light: "#000000", Dark: "#FAFAFA"}).
 			Foreground(lipgloss.AdaptiveColor{Light: "#FAFAFA", Dark: "#000000"})
 
+	canceledEventStyle = lipgloss.NewStyle().Strikethrough(true)
+
 	shirtNumberStyle = lipgloss.NewStyle().Width(2)
 )
 
@@ -132,7 +134,14 @@ func renderEvents(events []data.Event, reverse bool) string {
 
 func renderEvent(event data.Event, reverse bool) string {
 	if reverse {
+		if event.Canceled {
+			return canceledEventStyle.Render(event.Player+" "+event.Minute) + " " + renderEventType(event.Type)
+		}
 		return event.Player + " " + event.Minute + " " + renderEventType(event.Type)
+	}
+
+	if event.Canceled {
+		return renderEventType(event.Type) + " " + canceledEventStyle.Render(event.Minute+" "+event.Player)
 	}
 	return renderEventType(event.Type) + " " + event.Minute + " " + event.Player
 }
