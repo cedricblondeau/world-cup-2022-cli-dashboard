@@ -2,6 +2,7 @@ package ui
 
 import (
 	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/data"
+	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/ui/playerstats"
 	tea "github.com/charmbracelet/bubbletea"
 )
 
@@ -14,6 +15,7 @@ type dataFetcher interface {
 type dataFetchMsg struct {
 	groupTablesByLetter map[string]data.GroupTable
 	sortedMatches       []data.Match
+	playerStatsByTeam   map[string]playerstats.PlayerStats
 }
 
 type dataFetchErrMsg struct{ err error }
@@ -34,6 +36,8 @@ func dataFetchCmd(fetcher dataFetcher) func() tea.Msg {
 			return dataFetchErrMsg{err: err}
 		}
 
-		return dataFetchMsg{groupTablesByLetter, sortedMatches}
+		playerStatsByTeam := playerstats.PlayerStatsByTeam(sortedMatches)
+
+		return dataFetchMsg{groupTablesByLetter, sortedMatches, playerStatsByTeam}
 	}
 }
