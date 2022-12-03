@@ -8,13 +8,15 @@ import (
 	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/data"
 	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/ui/bigtext"
 	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/ui/flags"
+	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/ui/playerstats"
 	"github.com/charmbracelet/lipgloss"
 )
 
 type MatchParams struct {
-	BigText *bigtext.BigText
-	Match   data.Match
-	Width   int
+	BigText           *bigtext.BigText
+	PlayerStatsByTeam map[string]playerstats.PlayerStats
+	Match             data.Match
+	Width             int
 }
 
 var (
@@ -29,7 +31,8 @@ var (
 
 	canceledEventStyle = lipgloss.NewStyle().Strikethrough(true)
 
-	shirtNumberStyle = lipgloss.NewStyle().Width(2)
+	yellowCard = lipgloss.NewStyle().SetString("■").Foreground(lipgloss.Color("#FFFF00")).String()
+	redCard    = lipgloss.NewStyle().SetString("■").Foreground(lipgloss.Color("#FF0000")).String()
 )
 
 func Match(params MatchParams) string {
@@ -51,7 +54,7 @@ func Match(params MatchParams) string {
 		lipgloss.Top,
 
 		lipgloss.NewStyle().Width(fourColsWidth).Align(lipgloss.Center).SetString(
-			renderTeamCol(fourColsWidth, params.Match.HomeTeamCode, params.Match.HomeTeamLineup, true),
+			renderTeamCol(fourColsWidth, params.Match.HomeTeamCode, params.Match.HomeTeamLineup, params.PlayerStatsByTeam),
 		).String(),
 
 		lipgloss.NewStyle().Width(fourColsWidth*2).SetString(
@@ -78,41 +81,74 @@ func Match(params MatchParams) string {
 		).String(),
 
 		lipgloss.NewStyle().Width(fourColsWidth).Align(lipgloss.Center).SetString(
-			renderTeamCol(fourColsWidth, params.Match.AwayTeamCode, params.Match.AwayTeamLineup, false),
+			renderTeamCol(fourColsWidth, params.Match.AwayTeamCode, params.Match.AwayTeamLineup, params.PlayerStatsByTeam),
 		).String(),
 	)
 
 	return s
 }
 
-func renderTeamCol(width int, countryCode string, lineup []data.Player, reverse bool) string {
+func renderTeamCol(
+	width int,
+	countryCode string,
+	lineup []data.Player,
+	playerStatsByTeam map[string]playerstats.PlayerStats,
+) string {
 	teamInfo, ok := data.TeamInfoByCode[countryCode]
 	teamName := countryCode
 	if ok {
 		teamName = teamInfo.Name
 	}
-	var renderedLineup string
-	for _, player := range lineup {
-		if reverse {
-			renderedLineup += player.Name + " " + shirtNumberStyle.Render(strconv.FormatInt(int64(player.ShirtNumber), 10)) + "\n"
-		} else {
-			renderedLineup += shirtNumberStyle.Render(strconv.FormatInt(int64(player.ShirtNumber), 10)) + " " + player.Name + "\n"
+
+	playerStats, ok := playerStatsByTeam[countryCode]
+	if !ok {
+		playerStats = playerstats.PlayerStats{
+			GoalsByPlayer:       make(map[string]int64),
+			YellowCardsByPlayer: make(map[string]int64),
+			RedCardsByPlayer:    make(map[string]int64),
 		}
 	}
-
-	if reverse {
-		var s string
-		s += lipgloss.NewStyle().Bold(true).Width(width).Align(lipgloss.Right).Render(teamName) + "\n\n"
-		s += lipgloss.NewStyle().Width(width).Align(lipgloss.Right).SetString(flags.Render(countryCode)).String() + "\n"
-		s += lipgloss.NewStyle().Width(width).Align(lipgloss.Right).SetString(renderedLineup).String() + "\n"
-		return s
-	}
+	renderedLineup := renderLineup(lineup, playerStats)
 
 	var s string
-	s += lipgloss.NewStyle().Bold(true).Width(width).Align(lipgloss.Left).Render(teamName) + "\n\n"
-	s += lipgloss.NewStyle().Width(width).Align(lipgloss.Left).SetString(flags.Render(countryCode)).String() + "\n"
-	s += lipgloss.NewStyle().Width(width).Align(lipgloss.Left).SetString(renderedLineup).String() + "\n"
+	s += lipgloss.NewStyle().Bold(true).Width(width).Align(lipgloss.Center).Render(teamName) + "\n\n"
+	s += lipgloss.NewStyle().Width(width).Align(lipgloss.Center).SetString(flags.Render(countryCode)).String() + "\n"
+	s += lipgloss.NewStyle().Width(width).Align(lipgloss.Center).SetString(renderedLineup).String() + "\n"
 	return s
+}
+
+func renderLineup(
+	lineup []data.Player,
+	playerStats playerstats.PlayerStats,
+) string {
+	if len(lineup) == 0 {
+		return ""
+	}
+
+	headingsStyle := lipgloss.NewStyle().Border(lipgloss.NormalBorder(), false, false, true, false)
+	defaultColStyle := lipgloss.NewStyle().Width(3).Align(lipgloss.Center)
+	playerColStyle := lipgloss.NewStyle().Width(27).Align(lipgloss.Left)
+
+	var headings string
+	headings += defaultColStyle.Render("#")
+	headings += playerColStyle.Render("Player")
+	headings += defaultColStyle.Render("⚽")
+	headings += defaultColStyle.Render(yellowCard)
+	headings += defaultColStyle.Render(redCard)
+
+	var rows string
+	for _, player := range lineup {
+		var row string
+		row += defaultColStyle.Render(strconv.FormatInt(int64(player.ShirtNumber), 10))
+		row += playerColStyle.Render(player.Name)
+		row += defaultColStyle.Render(strconv.FormatInt(playerStats.GoalsByPlayer[player.Name], 10))
+		row += defaultColStyle.Render(strconv.FormatInt(playerStats.YellowCardsByPlayer[player.Name], 10))
+		row += defaultColStyle.Render(strconv.FormatInt(playerStats.RedCardsByPlayer[player.Name], 10))
+
+		rows += row + "\n"
+	}
+
+	return headingsStyle.Render(headings) + "\n" + rows
 }
 
 func renderStatus(match data.Match) string {
@@ -148,9 +184,9 @@ func renderEvent(event data.Event, reverse bool) string {
 
 func renderEventType(eventType string) string {
 	eventTypeIcons := map[string]string{
-		string(data.EventTypeYellowCard):      lipgloss.NewStyle().SetString("■").Foreground(lipgloss.Color("#FFFF00")).String(),
-		string(data.EventTypeSeconYellowCard): lipgloss.NewStyle().SetString("■").Foreground(lipgloss.Color("#FFFF00")).String(),
-		string(data.EventTypeRedCard):         lipgloss.NewStyle().SetString("■").Foreground(lipgloss.Color("#FF0000")).String(),
+		string(data.EventTypeYellowCard):      yellowCard,
+		string(data.EventTypeSeconYellowCard): yellowCard,
+		string(data.EventTypeRedCard):         redCard,
 		string(data.EventTypeSubIn):           "►",
 		string(data.EventTypeSubOut):          "◄",
 	}

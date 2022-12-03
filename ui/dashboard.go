@@ -10,6 +10,7 @@ import (
 	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/ui/group"
 	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/ui/match"
 	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/ui/nav"
+	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/ui/playerstats"
 	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/ui/statusbar"
 	"github.com/charmbracelet/bubbles/help"
 	"github.com/charmbracelet/bubbles/key"
@@ -33,6 +34,7 @@ type dashboard struct {
 
 	help help.Model
 
+	playerStatsByTeam   map[string]playerstats.PlayerStats
 	groupTablesByLetter map[string]data.GroupTable
 	sortedMatches       []data.Match
 
@@ -73,6 +75,7 @@ func (m *dashboard) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.dataFetchLastUpdate = time.Now()
 		m.groupTablesByLetter = msg.groupTablesByLetter
 		m.sortedMatches = msg.sortedMatches
+		m.playerStatsByTeam = msg.playerStatsByTeam
 		if !m.matchIndexChanged || m.matchIndex > len(msg.sortedMatches)-1 {
 			m.matchIndex = pickMatchIndex(msg.sortedMatches)
 		}
@@ -125,8 +128,8 @@ func (m *dashboard) View() string {
 
 	fullScreenMsgStyle := lipgloss.NewStyle().Width(m.width).Height(m.height).Align(lipgloss.Center, lipgloss.Center)
 
-	minWidth := 113
-	minHeight := 38
+	minWidth := 160
+	minHeight := 50
 	if m.width < minWidth || m.height < minHeight {
 		return fullScreenMsgStyle.Render(fmt.Sprintf("❌ Need at least %d columns and %d rows to render.\n\nResize terminal or press q to quit.", minWidth, minHeight))
 	}
@@ -188,9 +191,10 @@ func (m *dashboard) View() string {
 	matchContainerHeight := m.height - lipgloss.Height(navContainer) - lipgloss.Height(groupOrBracketContainer) - lipgloss.Height(statusBarContainer) - lipgloss.Height(helpContainer)
 	matchContainer := lipgloss.NewStyle().
 		SetString(match.Match(match.MatchParams{
-			BigText: m.bigtext,
-			Match:   m.sortedMatches[min(m.matchIndex, len(m.sortedMatches)-1)],
-			Width:   m.width - 1 - 1,
+			BigText:           m.bigtext,
+			PlayerStatsByTeam: m.playerStatsByTeam,
+			Match:             m.sortedMatches[min(m.matchIndex, len(m.sortedMatches)-1)],
+			Width:             m.width - 1 - 1,
 		})).
 		Height(matchContainerHeight).
 		MaxHeight(matchContainerHeight).
