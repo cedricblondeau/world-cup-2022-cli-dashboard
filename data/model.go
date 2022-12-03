@@ -70,8 +70,9 @@ type Event struct {
 	// MatchEventType is a MatchEventTypeGoal when the type is known - otherwise a string
 	Type string
 
-	Minute string
-	Player string
+	Minute   string
+	Player   string
+	Canceled bool
 }
 
 type TeamInfo struct {
