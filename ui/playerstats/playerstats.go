@@ -18,7 +18,6 @@ func PlayerStatsByTeam(matches []data.Match) map[string]PlayerStats {
 	playerStatsByTeam := make(map[string]PlayerStats)
 	for team, events := range eventsByTeam {
 		playerStatsByTeam[team] = playerStats(events)
-
 	}
 	return playerStatsByTeam
 }

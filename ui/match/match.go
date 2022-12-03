@@ -31,8 +31,6 @@ var (
 
 	canceledEventStyle = lipgloss.NewStyle().Strikethrough(true)
 
-	shirtNumberStyle = lipgloss.NewStyle().Width(2)
-
 	yellowCard = lipgloss.NewStyle().SetString("■").Foreground(lipgloss.Color("#FFFF00")).String()
 	redCard    = lipgloss.NewStyle().SetString("■").Foreground(lipgloss.Color("#FF0000")).String()
 )
