@@ -4,43 +4,43 @@
           "letter": "A",
           "teams": [
               {
-                  "country": "SEN",
-                  "name": "Senegal",
-                  "group_letter": "A",
-                  "group_points": 3,
-                  "wins": 1,
-                  "draws": 0,
-                  "losses": 1,
-                  "games_played": 2,
-                  "goals_for": 3,
-                  "goals_against": 3,
-                  "goal_differential": 0
-              },
-              {
                   "country": "QAT",
                   "name": "Qatar",
                   "group_letter": "A",
                   "group_points": 0,
                   "wins": 0,
                   "draws": 0,
-                  "losses": 2,
-                  "games_played": 2,
+                  "losses": 3,
+                  "games_played": 3,
                   "goals_for": 1,
-                  "goals_against": 5,
-                  "goal_differential": -4
+                  "goals_against": 7,
+                  "goal_differential": -6
               },
               {
                   "country": "NED",
                   "name": "Netherlands",
                   "group_letter": "A",
-                  "group_points": 4,
-                  "wins": 1,
+                  "group_points": 7,
+                  "wins": 2,
                   "draws": 1,
                   "losses": 0,
-                  "games_played": 2,
-                  "goals_for": 3,
+                  "games_played": 3,
+                  "goals_for": 5,
                   "goals_against": 1,
-                  "goal_differential": 2
+                  "goal_differential": 4
+              },
+              {
+                  "country": "SEN",
+                  "name": "Senegal",
+                  "group_letter": "A",
+                  "group_points": 6,
+                  "wins": 2,
+                  "draws": 0,
+                  "losses": 1,
+                  "games_played": 3,
+                  "goals_for": 5,
+                  "goals_against": 4,
+                  "goal_differential": 1
               },
               {
                   "country": "ECU",
@@ -49,11 +49,11 @@
                   "group_points": 4,
                   "wins": 1,
                   "draws": 1,
-                  "losses": 0,
-                  "games_played": 2,
-                  "goals_for": 3,
-                  "goals_against": 1,
-                  "goal_differential": 2
+                  "losses": 1,
+                  "games_played": 3,
+                  "goals_for": 4,
+                  "goals_against": 3,
+                  "goal_differential": 1
               }
           ]
       },
@@ -64,27 +64,27 @@
                   "country": "ENG",
                   "name": "England",
                   "group_letter": "B",
-                  "group_points": 4,
-                  "wins": 1,
+                  "group_points": 7,
+                  "wins": 2,
                   "draws": 1,
                   "losses": 0,
-                  "games_played": 2,
-                  "goals_for": 6,
+                  "games_played": 3,
+                  "goals_for": 9,
                   "goals_against": 2,
-                  "goal_differential": 4
+                  "goal_differential": 7
               },
               {
                   "country": "USA",
                   "name": "United States",
                   "group_letter": "B",
-                  "group_points": 2,
-                  "wins": 0,
+                  "group_points": 5,
+                  "wins": 1,
                   "draws": 2,
                   "losses": 0,
-                  "games_played": 2,
-                  "goals_for": 1,
+                  "games_played": 3,
+                  "goals_for": 2,
                   "goals_against": 1,
-                  "goal_differential": 0
+                  "goal_differential": 1
               },
               {
                   "country": "WAL",
@@ -93,11 +93,11 @@
                   "group_points": 1,
                   "wins": 0,
                   "draws": 1,
-                  "losses": 1,
-                  "games_played": 2,
+                  "losses": 2,
+                  "games_played": 3,
                   "goals_for": 1,
-                  "goals_against": 3,
-                  "goal_differential": -2
+                  "goals_against": 6,
+                  "goal_differential": -5
               },
               {
                   "country": "IRN",
@@ -106,11 +106,11 @@
                   "group_points": 3,
                   "wins": 1,
                   "draws": 0,
-                  "losses": 1,
-                  "games_played": 2,
+                  "losses": 2,
+                  "games_played": 3,
                   "goals_for": 4,
-                  "goals_against": 6,
-                  "goal_differential": -2
+                  "goals_against": 7,
+                  "goal_differential": -3
               }
           ]
       },
@@ -118,17 +118,43 @@
           "letter": "C",
           "teams": [
               {
+                  "country": "MEX",
+                  "name": "Mexico",
+                  "group_letter": "C",
+                  "group_points": 4,
+                  "wins": 1,
+                  "draws": 1,
+                  "losses": 1,
+                  "games_played": 3,
+                  "goals_for": 2,
+                  "goals_against": 3,
+                  "goal_differential": -1
+              },
+              {
                   "country": "POL",
                   "name": "Poland",
                   "group_letter": "C",
                   "group_points": 4,
                   "wins": 1,
                   "draws": 1,
-                  "losses": 0,
-                  "games_played": 2,
+                  "losses": 1,
+                  "games_played": 3,
                   "goals_for": 2,
-                  "goals_against": 0,
-                  "goal_differential": 2
+                  "goals_against": 2,
+                  "goal_differential": 0
+              },
+              {
+                  "country": "ARG",
+                  "name": "Argentina",
+                  "group_letter": "C",
+                  "group_points": 6,
+                  "wins": 2,
+                  "draws": 0,
+                  "losses": 1,
+                  "games_played": 3,
+                  "goals_for": 5,
+                  "goals_against": 2,
+                  "goal_differential": 3
               },
               {
                   "country": "KSA",
@@ -137,37 +163,11 @@
                   "group_points": 3,
                   "wins": 1,
                   "draws": 0,
-                  "losses": 1,
-                  "games_played": 2,
-                  "goals_for": 2,
-                  "goals_against": 3,
-                  "goal_differential": -1
-              },
-              {
-                  "country": "MEX",
-                  "name": "Mexico",
-                  "group_letter": "C",
-                  "group_points": 1,
-                  "wins": 0,
-                  "draws": 1,
-                  "losses": 1,
-                  "games_played": 2,
-                  "goals_for": 0,
-                  "goals_against": 2,
-                  "goal_differential": -2
-              },
-              {
-                  "country": "ARG",
-                  "name": "Argentina",
-                  "group_letter": "C",
-                  "group_points": 3,
-                  "wins": 1,
-                  "draws": 0,
-                  "losses": 1,
-                  "games_played": 2,
+                  "losses": 2,
+                  "games_played": 3,
                   "goals_for": 3,
-                  "goals_against": 2,
-                  "goal_differential": 1
+                  "goals_against": 5,
+                  "goal_differential": -2
               }
           ]
       },
@@ -178,27 +178,27 @@
                   "country": "TUN",
                   "name": "Tunisia",
                   "group_letter": "D",
-                  "group_points": 1,
+                  "group_points": 2,
                   "wins": 0,
-                  "draws": 1,
+                  "draws": 2,
                   "losses": 1,
-                  "games_played": 2,
-                  "goals_for": 0,
-                  "goals_against": 1,
+                  "games_played": 3,
+                  "goals_for": 1,
+                  "goals_against": 2,
                   "goal_differential": -1
               },
               {
                   "country": "AUS",
                   "name": "Australia",
                   "group_letter": "D",
-                  "group_points": 3,
-                  "wins": 1,
+                  "group_points": 6,
+                  "wins": 2,
                   "draws": 0,
                   "losses": 1,
-                  "games_played": 2,
-                  "goals_for": 2,
+                  "games_played": 3,
+                  "goals_for": 3,
                   "goals_against": 4,
-                  "goal_differential": -2
+                  "goal_differential": -1
               },
               {
                   "country": "DEN",
@@ -207,23 +207,23 @@
                   "group_points": 1,
                   "wins": 0,
                   "draws": 1,
-                  "losses": 1,
-                  "games_played": 2,
+                  "losses": 2,
+                  "games_played": 3,
                   "goals_for": 1,
-                  "goals_against": 2,
-                  "goal_differential": -1
+                  "goals_against": 3,
+                  "goal_differential": -2
               },
               {
                   "country": "FRA",
                   "name": "France",
                   "group_letter": "D",
-                  "group_points": 6,
+                  "group_points": 7,
                   "wins": 2,
-                  "draws": 0,
+                  "draws": 1,
                   "losses": 0,
-                  "games_played": 2,
-                  "goals_for": 6,
-                  "goals_against": 2,
+                  "games_played": 3,
+                  "goals_for": 7,
+                  "goals_against": 3,
                   "goal_differential": 4
               }
           ]
@@ -238,37 +238,37 @@
                   "group_points": 3,
                   "wins": 1,
                   "draws": 0,
-                  "losses": 1,
-                  "games_played": 2,
-                  "goals_for": 1,
-                  "goals_against": 7,
-                  "goal_differential": -6
+                  "losses": 2,
+                  "games_played": 3,
+                  "goals_for": 3,
+                  "goals_against": 11,
+                  "goal_differential": -8
               },
               {
                   "country": "JPN",
                   "name": "Japan",
                   "group_letter": "E",
-                  "group_points": 3,
-                  "wins": 1,
+                  "group_points": 6,
+                  "wins": 2,
                   "draws": 0,
                   "losses": 1,
-                  "games_played": 2,
-                  "goals_for": 2,
-                  "goals_against": 2,
-                  "goal_differential": 0
+                  "games_played": 3,
+                  "goals_for": 4,
+                  "goals_against": 3,
+                  "goal_differential": 1
               },
               {
                   "country": "GER",
                   "name": "Germany",
                   "group_letter": "E",
-                  "group_points": 1,
-                  "wins": 0,
+                  "group_points": 4,
+                  "wins": 1,
                   "draws": 1,
                   "losses": 1,
-                  "games_played": 2,
-                  "goals_for": 2,
-                  "goals_against": 3,
-                  "goal_differential": -1
+                  "games_played": 3,
+                  "goals_for": 6,
+                  "goals_against": 5,
+                  "goal_differential": 1
               },
               {
                   "country": "ESP",
@@ -277,11 +277,11 @@
                   "group_points": 4,
                   "wins": 1,
                   "draws": 1,
-                  "losses": 0,
-                  "games_played": 2,
-                  "goals_for": 8,
-                  "goals_against": 1,
-                  "goal_differential": 7
+                  "losses": 1,
+                  "games_played": 3,
+                  "goals_for": 9,
+                  "goals_against": 3,
+                  "goal_differential": 6
               }
           ]
       },
@@ -292,24 +292,24 @@
                   "country": "MAR",
                   "name": "Morocco",
                   "group_letter": "F",
-                  "group_points": 4,
-                  "wins": 1,
+                  "group_points": 7,
+                  "wins": 2,
                   "draws": 1,
                   "losses": 0,
-                  "games_played": 2,
-                  "goals_for": 2,
-                  "goals_against": 0,
-                  "goal_differential": 2
+                  "games_played": 3,
+                  "goals_for": 4,
+                  "goals_against": 1,
+                  "goal_differential": 3
               },
               {
                   "country": "BEL",
                   "name": "Belgium",
                   "group_letter": "F",
-                  "group_points": 3,
+                  "group_points": 4,
                   "wins": 1,
-                  "draws": 0,
+                  "draws": 1,
                   "losses": 1,
-                  "games_played": 2,
+                  "games_played": 3,
                   "goals_for": 1,
                   "goals_against": 2,
                   "goal_differential": -1
@@ -318,11 +318,11 @@
                   "country": "CRO",
                   "name": "Croatia",
                   "group_letter": "F",
-                  "group_points": 4,
+                  "group_points": 5,
                   "wins": 1,
-                  "draws": 1,
+                  "draws": 2,
                   "losses": 0,
-                  "games_played": 2,
+                  "games_played": 3,
                   "goals_for": 4,
                   "goals_against": 1,
                   "goal_differential": 3
@@ -334,11 +334,11 @@
                   "group_points": 0,
                   "wins": 0,
                   "draws": 0,
-                  "losses": 2,
-                  "games_played": 2,
-                  "goals_for": 1,
-                  "goals_against": 5,
-                  "goal_differential": -4
+                  "losses": 3,
+                  "games_played": 3,
+                  "goals_for": 2,
+                  "goals_against": 7,
+                  "goal_differential": -5
               }
           ]
       },
@@ -346,56 +346,56 @@
           "letter": "G",
           "teams": [
               {
-                  "country": "BRA",
-                  "name": "Brazil",
-                  "group_letter": "G",
-                  "group_points": 3,
-                  "wins": 1,
-                  "draws": 0,
-                  "losses": 0,
-                  "games_played": 1,
-                  "goals_for": 2,
-                  "goals_against": 0,
-                  "goal_differential": 2
-              },
-              {
                   "country": "SRB",
                   "name": "Serbia",
                   "group_letter": "G",
-                  "group_points": 0,
+                  "group_points": 1,
                   "wins": 0,
-                  "draws": 0,
-                  "losses": 1,
-                  "games_played": 1,
-                  "goals_for": 0,
-                  "goals_against": 2,
-                  "goal_differential": -2
-              },
-              {
-                  "country": "SUI",
-                  "name": "Switzerland",
-                  "group_letter": "G",
-                  "group_points": 3,
-                  "wins": 1,
-                  "draws": 0,
-                  "losses": 0,
-                  "games_played": 1,
-                  "goals_for": 1,
-                  "goals_against": 0,
-                  "goal_differential": 1
+                  "draws": 1,
+                  "losses": 2,
+                  "games_played": 3,
+                  "goals_for": 5,
+                  "goals_against": 8,
+                  "goal_differential": -3
               },
               {
                   "country": "CMR",
                   "name": "Cameroon",
                   "group_letter": "G",
-                  "group_points": 0,
-                  "wins": 0,
+                  "group_points": 4,
+                  "wins": 1,
+                  "draws": 1,
+                  "losses": 1,
+                  "games_played": 3,
+                  "goals_for": 4,
+                  "goals_against": 4,
+                  "goal_differential": 0
+              },
+              {
+                  "country": "BRA",
+                  "name": "Brazil",
+                  "group_letter": "G",
+                  "group_points": 6,
+                  "wins": 2,
                   "draws": 0,
                   "losses": 1,
-                  "games_played": 1,
-                  "goals_for": 0,
+                  "games_played": 3,
+                  "goals_for": 3,
                   "goals_against": 1,
-                  "goal_differential": -1
+                  "goal_differential": 2
+              },
+              {
+                  "country": "SUI",
+                  "name": "Switzerland",
+                  "group_letter": "G",
+                  "group_points": 6,
+                  "wins": 2,
+                  "draws": 0,
+                  "losses": 1,
+                  "games_played": 3,
+                  "goals_for": 4,
+                  "goals_against": 3,
+                  "goal_differential": 1
               }
           ]
       },
@@ -403,56 +403,56 @@
           "letter": "H",
           "teams": [
               {
-                  "country": "URU",
-                  "name": "Uruguay",
-                  "group_letter": "H",
-                  "group_points": 1,
-                  "wins": 0,
-                  "draws": 1,
-                  "losses": 0,
-                  "games_played": 1,
-                  "goals_for": 0,
-                  "goals_against": 0,
-                  "goal_differential": 0
-              },
-              {
                   "country": "KOR",
                   "name": "Korea Republic",
                   "group_letter": "H",
-                  "group_points": 1,
-                  "wins": 0,
+                  "group_points": 4,
+                  "wins": 1,
                   "draws": 1,
-                  "losses": 0,
-                  "games_played": 1,
-                  "goals_for": 0,
-                  "goals_against": 0,
+                  "losses": 1,
+                  "games_played": 3,
+                  "goals_for": 4,
+                  "goals_against": 4,
                   "goal_differential": 0
               },
               {
                   "country": "POR",
                   "name": "Portugal",
                   "group_letter": "H",
-                  "group_points": 3,
-                  "wins": 1,
+                  "group_points": 6,
+                  "wins": 2,
                   "draws": 0,
-                  "losses": 0,
-                  "games_played": 1,
-                  "goals_for": 3,
-                  "goals_against": 2,
-                  "goal_differential": 1
+                  "losses": 1,
+                  "games_played": 3,
+                  "goals_for": 6,
+                  "goals_against": 4,
+                  "goal_differential": 2
               },
               {
                   "country": "GHA",
                   "name": "Ghana",
                   "group_letter": "H",
-                  "group_points": 0,
-                  "wins": 0,
+                  "group_points": 3,
+                  "wins": 1,
                   "draws": 0,
+                  "losses": 2,
+                  "games_played": 3,
+                  "goals_for": 5,
+                  "goals_against": 7,
+                  "goal_differential": -2
+              },
+              {
+                  "country": "URU",
+                  "name": "Uruguay",
+                  "group_letter": "H",
+                  "group_points": 4,
+                  "wins": 1,
+                  "draws": 1,
                   "losses": 1,
-                  "games_played": 1,
+                  "games_played": 3,
                   "goals_for": 2,
-                  "goals_against": 3,
-                  "goal_differential": -1
+                  "goals_against": 2,
+                  "goal_differential": 0
               }
           ]
       }
