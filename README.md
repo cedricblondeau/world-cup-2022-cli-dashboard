@@ -9,7 +9,8 @@
 - ⚽ Live matches (goals, bookings, substitutions)
 - 🗒️ Team lineups
 - 📅 Scheduled and past matches
-- 📊 Standings
+- 📒 Standings & bracket
+- 📊 Player stats (goals, yellow cards, red cards)
 
 ## Install
 
