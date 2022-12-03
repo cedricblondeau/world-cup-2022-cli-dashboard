@@ -56,12 +56,12 @@ func (c *Client) SortedMatches() ([]data.Match, error) {
 			return nil, err
 		}
 
-		homeTeamEvents := make([]data.Event, len(parsedMatch.HomeTeamEvents))
+		var homeTeamEvents []data.Event
 		for _, event := range parsedMatch.HomeTeamEvents {
 			homeTeamEvents = append(homeTeamEvents, events(event)...)
 		}
 
-		awayTeamEvents := make([]data.Event, len(parsedMatch.AwayTeamEvents))
+		var awayTeamEvents []data.Event
 		for _, event := range parsedMatch.AwayTeamEvents {
 			awayTeamEvents = append(awayTeamEvents, events(event)...)
 		}
