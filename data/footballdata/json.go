@@ -22,21 +22,3 @@ type parsedMatches struct {
 		} `json:"score"`
 	}
 }
-
-type parsedStandings struct {
-	Groups []struct {
-		Group string `json:"group"`
-		Table []struct {
-			Position       int `json:"position"`
-			Team           parsedTeam
-			PlayedGames    int `json:"playedGames"`
-			Won            int `json:"won"`
-			Draw           int `json:"draw"`
-			Lost           int `json:"lost"`
-			GoalsFor       int `json:"goalsFor"`
-			GoalsAgainst   int `json:"goalsAgainst"`
-			GoalDifference int `json:"goalDifference"`
-			Points         int `json:"points"`
-		}
-	} `json:"standings"`
-}

@@ -1,22 +1,5 @@
 package worldcupjson
 
-type parsedTeams struct {
-	Groups []struct {
-		Letter string `json:"letter"`
-		Teams  []struct {
-			Country           string `json:"country"`
-			GamesPlayed       int    `json:"games_played"`
-			Wins              int    `json:"wins"`
-			Draws             int    `json:"draws"`
-			Losses            int    `json:"losses"`
-			GoalsFor          int    `json:"goals_for"`
-			GoalsAgainst      int    `json:"goals_against"`
-			GoalsDifferential int    `json:"goal_differential"`
-			GroupPoints       int    `json:"group_points"`
-		}
-	} `json:"groups"`
-}
-
 type parsedMatchTeam struct {
 	Country string `json:"country"`
 	Goals   uint   `json:"goals"`
