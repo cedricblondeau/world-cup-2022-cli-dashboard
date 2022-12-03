@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/data"
+	"github.com/cedricblondeau/world-cup-2022-cli-dashboard/data/local"
 )
 
 type mockableHttpClient interface {
@@ -113,6 +114,15 @@ func (c *Client) SortedMatches() ([]data.Match, error) {
 		}
 		return matches[i].Date.Before(matches[j].Date)
 	})
+
+	localMatches, err := local.SortedLocalMatches()
+	if err != nil {
+		return nil, err
+	}
+
+	for i, localMatch := range localMatches {
+		matches[i] = localMatch
+	}
 
 	return matches, nil
 }
