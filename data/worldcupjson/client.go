@@ -93,10 +93,7 @@ func (c *Client) SortedMatches() ([]data.Match, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	for i, localMatch := range localMatches {
-		matches[i] = localMatch
-	}
+	copy(matches, localMatches)
 
 	return matches, nil
 }
