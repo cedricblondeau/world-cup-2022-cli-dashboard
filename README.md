@@ -93,7 +93,7 @@ UI is powered by [bubbletea](https://github.com/charmbracelet/bubbletea) and [li
 
 For optimal results, it's recommended to use a terminal with:
 - True Color (24-bit) support;
-- at least 102 columns and 35 rows.
+- at least 160 columns and 50 rows.
 ## LICENSE
 
 MIT
