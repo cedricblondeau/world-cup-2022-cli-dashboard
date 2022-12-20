@@ -34,7 +34,7 @@ func playerStats(events []data.Event) PlayerStats {
 			continue
 		}
 
-		if e.Type == data.EventTypeGoal || e.Type == data.EventTypePenaltyGoal {
+		if e.Type == data.EventTypeGoal || e.Type == data.EventTypePenaltyKickGoal {
 			playerStats.GoalsByPlayer[e.Player]++
 			continue
 		}

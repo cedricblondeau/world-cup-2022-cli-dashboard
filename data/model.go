@@ -5,14 +5,14 @@ import "time"
 type EventType string
 
 const EventTypeGoal = "Goal"
-const EventTypePenalyKick = "Penalty Kick"
+const EventTypePenaltyKickGoal = "Goal (P)"
+const EventTypePenaltyShootoutGoal = "Goal (S)"
+const EventTypeOwnGoal = "Own Goal"
 const EventTypeYellowCard = "Yellow Card"
 const EventTypeSeconYellowCard = "Second Yellow Card"
 const EventTypeRedCard = "Red Card"
 const EventTypeSubIn = "Substitution In"
 const EventTypeSubOut = "Substitution Out"
-const EventTypePenaltyGoal = "Penalty Goal"
-const EventTypeOwnGoal = "Own Goal"
 
 type Stage string
 
@@ -67,7 +67,7 @@ type Match struct {
 }
 
 type Event struct {
-	// MatchEventType is a MatchEventTypeGoal when the type is known - otherwise a string
+	// Type is a EventType when the type is known - otherwise a string
 	Type string
 
 	Minute   string
