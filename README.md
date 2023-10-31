@@ -4,6 +4,8 @@
 
 [![forthebadge](https://raw.githubusercontent.com/BraveUX/for-the-badge/master/src/images/badges//built-with-love.svg)](https://forthebadge.com) [![forthebadge](https://raw.githubusercontent.com/BraveUX/for-the-badge/master/src/images/badges/kinda-sfw.svg)](https://forthebadge.com) [![forthebadge](https://raw.githubusercontent.com/BraveUX/for-the-badge/master/src/images/badges/made-with-go.svg)](https://forthebadge.com)
 
+Featured in 📹 [Charm in the Wild | December 2022](https://www.youtube.com/watch?v=XuTb7Ao27w4&t=252s) ❤️.
+
 ## Features
 
 - ⚽ Live matches (goals, bookings, substitutions)
@@ -63,6 +65,7 @@ UI is powered by [bubbletea](https://github.com/charmbracelet/bubbletea) and [li
 For optimal results, it's recommended to use a terminal with:
 - True Color (24-bit) support;
 - at least 160 columns and 50 rows.
+
 ## LICENSE
 
 MIT
